@@ -82,11 +82,9 @@
         this.showLoader()
         signin({ username: this.username, password: this.password })
           .then(response => {
-            this.alert = {
-              title: 'success',
-              type: 'success'
-            }
-            this.hideLoader()
+            const user = { token: response.token }
+            localStorage.setItem('user', JSON.stringify(user))
+            this.$router.push({ path: this.$route.query.return_to || '/' })
           })
           .catch(response => {
             this.alert = {
