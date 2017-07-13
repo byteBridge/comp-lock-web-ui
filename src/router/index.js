@@ -11,7 +11,10 @@ const router = new Router({
       // for now lets treat the he
       path: '/',
       name: 'Hello',
-      component: Hello
+      component: Hello,
+      meta: {
+        requiresAuth: true
+      }
     },
 
     {
@@ -22,4 +25,20 @@ const router = new Router({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    next((!user || !user.token)
+      ? true
+      : {
+        name: 'SignIn',
+        query: {
+          return_to: to.fullPath
+        }
+      }
+    )
+  } else {
+    next()
+  }
+})
 export default router
