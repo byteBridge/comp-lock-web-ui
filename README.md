@@ -1,6 +1,6 @@
 # comp-lock-web-ui
 
-> Platform to manage the users and view help.
+> Platform to manage complock users and view help.
 
 ## Build Setup
 
