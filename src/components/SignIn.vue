@@ -2,7 +2,18 @@
   <v-container fluid>
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
-
+        <v-alert
+          :success="alert.type === 'success'"
+          :warning="alert.type === 'warning'"
+          :info="alert.type === 'info'"
+          :error="alert.type === 'error'"
+          :value="alert.title"
+          v-model="alert.title"
+          transition="scale-transition"
+          dismissible
+        >
+          {{ alert.title }}
+        </v-alert>
         <v-card class="moved down">
           <v-toolbar dark class="teal darken-2">
             <v-btn icon>
@@ -37,7 +48,7 @@
           <v-btn
             primary
             :loading="loading"
-            @click.native="loader = 'loading'"
+            @click.native="signin"
             :disabled="loading"
             class="fluid button"
           >
@@ -50,13 +61,51 @@
 </template>
 
 <script>
+  import { signin } from '../modules/signin'
+
   export default {
     data () {
       return {
         username: '',
         password: '',
         loader: null,
-        loading: false
+        loading: false,
+        alert: {
+          title: '',
+          type: ''
+        }
+      }
+    },
+
+    methods: {
+      signin () {
+        this.showLoader()
+        signin({ username: this.username, password: this.password })
+          .then(response => {
+            this.alert = {
+              title: 'success',
+              type: 'success'
+            }
+            this.hideLoader()
+          })
+          .catch(response => {
+            this.alert = {
+              title: 'error',
+              type: 'error'
+            }
+            console.log(response)
+            this.hideLoader()
+          })
+      },
+
+      showLoader () {
+        this.loader = 'loading'
+        this.loading = !this.loading
+      },
+
+      hideLoader () {
+        this.loader = null
+        this.loading = false
       }
     }
   }
