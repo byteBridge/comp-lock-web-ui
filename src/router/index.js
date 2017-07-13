@@ -5,7 +5,7 @@ import SignIn from '@/components/SignIn'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       // for now lets treat the he
@@ -21,3 +21,5 @@ export default new Router({
     }
   ]
 })
+
+export default router
