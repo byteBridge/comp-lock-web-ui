@@ -52,7 +52,7 @@
             :disabled="loading"
             class="fluid button"
           >
-            Accept Terms
+            Sign In
           </v-btn>
         </v-card>
       </v-flex>
