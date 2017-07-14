@@ -28,15 +28,18 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const user = JSON.parse(localStorage.getItem('user'))
-    next((!user || !user.token)
-      ? true
-      : {
-        name: 'SignIn',
-        query: {
-          return_to: to.fullPath
-        }
+    const authenticated = (!!user === true && !!user.token === true)
+
+    // allow the user
+    if (authenticated) return next()
+
+    // redirect to the login page.
+    next({
+      name: 'SignIn',
+      query: {
+        return_to: to.fullPath
       }
-    )
+    })
   } else {
     next()
   }
