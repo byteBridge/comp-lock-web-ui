@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import { signin } from '../modules/signin'
+  import { signinApi } from '../modules/signin'
 
   export default {
     data () {
@@ -80,8 +80,9 @@
     methods: {
       signin () {
         this.showLoader()
-        signin({ username: this.username, password: this.password })
+        signinApi({ username: this.username, password: this.password })
           .then(response => {
+            console.log(response)
             const user = { token: response.token }
             localStorage.setItem('user', JSON.stringify(user))
             this.$router.push({ path: this.$route.query.return_to || '/' })
