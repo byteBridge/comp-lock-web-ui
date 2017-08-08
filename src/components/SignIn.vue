@@ -14,15 +14,16 @@
         >
           {{ alert.title }}
         </v-alert>
-        <v-card class="moved down">
-          <v-toolbar dark class="teal darken-2">
-            <v-btn icon>
-              <v-icon>person</v-icon>
-            </v-btn>
+        
+        <v-toolbar dark class="teal darken-2 login container">
+          <v-btn icon>
+            <v-icon>person</v-icon>
+          </v-btn>
           </v-toolbar-title>Sign in</v-toolbar-title>
-          </v-toolbar>
+        </v-toolbar>
 
-          <v-card-text>
+        <v-card  class="login container">
+           <v-card-text>
             <v-container>
               <v-layout row wrap>
                 <v-flex xs12>
@@ -45,12 +46,13 @@
             </v-container>
           </v-card-text>
 
-          <v-btn
+          <v-btn 
+            block
             primary
             :loading="loading"
             @click.native="signin"
             :disabled="loading"
-            class="fluid button"
+            style="margin: 5 0 5 0"
           >
             Sign In
           </v-btn>
@@ -117,5 +119,9 @@
 
   .fluid.button {
     width: 98%
+  }
+  .login.container {
+    max-width: 450px;
+    margin-top: 10px; 
   }
 </style>
