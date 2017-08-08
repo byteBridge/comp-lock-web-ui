@@ -40,6 +40,7 @@
                     v-model="password"
                     type='password'
                     prepend-icon="lock"
+                    @keyup.native.enter="signin"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
