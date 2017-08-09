@@ -2,18 +2,19 @@
   <v-container fluid>
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
-        <v-alert
+        <!-- show alerts using the snackbar -->
+        <v-snackbar
           :success="alert.type === 'success'"
           :warning="alert.type === 'warning'"
           :info="alert.type === 'info'"
           :error="alert.type === 'error'"
-          :value="alert.title"
-          v-model="alert.title"
-          transition="scale-transition"
-          dismissible
+          :timeout="2000"
+          top
+          v-model="alert.show"
         >
           {{ alert.title }}
-        </v-alert>
+          <v-btn flat class="white--text" @click.native="alert.title = false">Close</v-btn>
+        </v-snackbar>
         
         <v-toolbar dark class="teal darken-2 login container">
           <v-btn icon>
@@ -75,7 +76,8 @@
         loading: false,
         alert: {
           title: '',
-          type: ''
+          type: '',
+          show: false
         }
       }
     },
@@ -92,10 +94,11 @@
           })
           .catch(response => {
             this.alert = {
-              title: 'error',
-              type: 'error'
+              title: response.message,
+              type: 'error',
+              show: true
             }
-            console.log(response)
+
             this.hideLoader()
           })
       },
