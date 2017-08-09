@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import SignIn from '@/components/SignIn'
+import Help from '@/components/Help'
 
 Vue.use(Router)
 
@@ -21,6 +22,12 @@ const router = new Router({
       path: '/signin',
       name: 'SignIn',
       component: SignIn
+    },
+
+    {
+      path: '/help',
+      name: 'Help',
+      component: Help
     }
   ]
 })
