@@ -4,10 +4,10 @@
        <v-card>
          <v-toolbar><v-toolbar-title>Frequently Asked Questions</v-toolbar-title></v-toolbar>
           <v-layout row wrap>
-            <v-flex xs12 v-for="item in items">
+            <v-flex xs12 v-for="item in items" :key="item.title">
               <v-card>
                 <v-card-title primary-title>
-                  <div class="body-2 teal--text">{{item.title}}</div>
+                  <div class="body-2 primary--text">{{item.title}}</div>
                   <div v-html="item.subtitle"></div>
                 </v-card-title>
               </v-card>

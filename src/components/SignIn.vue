@@ -65,65 +65,50 @@
 </template>
 
 <script>
-  import { signinApi } from '../modules/signin'
-
   export default {
     data () {
       return {
         username: '',
         password: '',
         loader: null,
-        loading: false,
-        alert: {
-          title: '',
-          type: '',
-          show: false
+        loading: false
+      }
+    },
+
+    computed: {
+      alert () { return this.$store.getters.alert },
+      authUser () { return this.$store.getters.authUser }
+    },
+
+    watch: {
+      authUser (value) {
+        if (value !== null && value !== undefined) {
+          const returnPath = this.$route.query.return_to || 'Profile'
+          this.$router.push({ name: returnPath })
         }
+      },
+
+      alert (value) {
+        if (value.show === true) { this.showLoader(false) }
       }
     },
 
     methods: {
       signin () {
-        this.showLoader()
-        signinApi({ username: this.username, password: this.password })
-          .then(response => {
-            console.log(response)
-            const user = { token: response.token }
-            localStorage.setItem('user', JSON.stringify(user))
-            this.$router.push({ path: this.$route.query.return_to || '/' })
-          })
-          .catch(response => {
-            this.alert = {
-              title: response.message,
-              type: 'error',
-              show: true
-            }
-
-            this.hideLoader()
-          })
+        this.showLoader(true)
+        let credentials = { username: this.username, password: this.password }
+        this.$store.dispatch('signIn', credentials)
       },
 
-      showLoader () {
-        this.loader = 'loading'
-        this.loading = !this.loading
-      },
-
-      hideLoader () {
-        this.loader = null
-        this.loading = false
+      showLoader (value) {
+        this.loader = value === true ? 'loading' : null
+        this.loading = value
       }
     }
   }
 </script>
 
 <style>
-  .moved.down {
-    margin-top: 50px
-  }
-
-  .fluid.button {
-    width: 98%
-  }
   .login.container {
     max-width: 450px;
     margin-top: 10px; 

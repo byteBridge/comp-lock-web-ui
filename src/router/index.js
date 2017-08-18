@@ -1,18 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Profile from '@/components/Profile'
 import SignIn from '@/components/SignIn'
 import Help from '@/components/Help'
 
+import store from '@/store'
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
       // for now lets treat the he
-      path: '/',
-      name: 'Hello',
-      component: Hello,
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
       meta: {
         requiresAuth: true
       }
@@ -28,13 +29,18 @@ const router = new Router({
       path: '/help',
       name: 'Help',
       component: Help
+    },
+
+    {
+      path: '*',
+      redirect: '/profile'
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = store.getters.authUser
     const authenticated = (!!user === true && !!user.token === true)
 
     // allow the user
@@ -44,7 +50,7 @@ router.beforeEach((to, from, next) => {
     next({
       name: 'SignIn',
       query: {
-        return_to: to.fullPath
+        return_to: to.name
       }
     })
   } else {

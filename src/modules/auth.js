@@ -2,7 +2,7 @@ import axios from './axios'
 import { stringify } from 'querystring'
 
 /* user = { username, password } */
-export function signinApi (user) {
+export function signInApi (user) {
   return new Promise((resolve, reject) => {
     const { username, password } = user
 
