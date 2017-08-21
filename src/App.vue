@@ -1,8 +1,8 @@
 <template>
   <v-app light>
-    <v-toolbar dark class="teal darken-2">
+    <v-toolbar light>
 
-      <v-toolbar-title class="white--text"><v-icon dark>desktop_mac</v-icon> CompManager</v-toolbar-title>
+      <v-toolbar-title><v-icon light>desktop_mac</v-icon> CompManager</v-toolbar-title>
       <v-spacer></v-spacer>
      
       <v-btn
@@ -11,7 +11,7 @@
         v-for="menu in toolbarMenuItems"
         :key="menu.id"
         :to="menu.url">
-        <v-icon left dark>{{menu.icon}}</v-icon>
+        <v-icon left light>{{menu.icon}}</v-icon>
         {{menu.title}}
       </v-btn>
 
@@ -19,9 +19,9 @@
       <v-btn
         circular
         v-if="authenticated"
-        class="mr-3 ml-0 orange"
+        class="mr-3 ml-0 orange text--white"
         @click.native="signOut">
-        <v-icon left dark >lock_outline</v-icon>
+        <v-icon left light>lock_outline</v-icon>
         Sign out
       </v-btn>
 
