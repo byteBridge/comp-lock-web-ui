@@ -9,21 +9,15 @@
           :info="alert.type === 'info'"
           :error="alert.type === 'error'"
           :timeout="2000"
-          top
+          bottom right
           v-model="alert.show"
         >
           {{ alert.title }}
-          <v-btn flat class="white--text" @click.native="alert.title = false">Close</v-btn>
+          <v-btn small fab class="orange elevation-4" @click.native="alert.title = false"><v-icon dark class="white--text">cancel</v-icon></v-btn>
         </v-snackbar>
-        
-        <v-toolbar dark class="teal darken-2 login container">
-          <v-btn icon>
-            <v-icon>person</v-icon>
-          </v-btn>
-          </v-toolbar-title>Sign in</v-toolbar-title>
-        </v-toolbar>
 
         <v-card  class="login container">
+          <v-card-title ><h3 class="teal--text headline"> Sign in</h3></v-card-title>
            <v-card-text>
             <v-container>
               <v-layout row wrap>
@@ -50,11 +44,11 @@
 
           <v-btn 
             block
-            primary
             :loading="loading"
             @click.native="signin"
             :disabled="loading"
             style="margin: 5 0 5 0"
+            class="teal white--text"
           >
             Sign In
           </v-btn>
