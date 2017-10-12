@@ -2,7 +2,7 @@
   <v-app light>
     <v-toolbar light>
 
-      <v-toolbar-title><v-icon light>desktop_mac</v-icon> CompManager</v-toolbar-title>
+      <v-toolbar-title class="teal--text"><v-icon light class="teal--text">desktop_mac</v-icon> CompManager</v-toolbar-title>
       <v-spacer></v-spacer>
      
       <v-btn
@@ -17,11 +17,11 @@
 
       <!-- action buttons (not requiring one to navigate to another route)-->
       <v-btn
-        circular
         v-if="authenticated"
-        class="mr-3 ml-0 orange text--white"
+        dark
+        class="mr-3 ml-0 orange white--text"
         @click.native="signOut">
-        <v-icon left light>lock_outline</v-icon>
+        <v-icon left dark>lock_outline</v-icon>
         Sign out
       </v-btn>
 

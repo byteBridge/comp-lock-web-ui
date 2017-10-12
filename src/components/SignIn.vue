@@ -106,5 +106,6 @@
   .login.container {
     max-width: 450px;
     margin-top: 10px; 
+    min-width: 300px;
   }
 </style>
