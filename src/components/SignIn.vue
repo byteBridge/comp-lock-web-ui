@@ -75,10 +75,20 @@
     },
 
     watch: {
-      authUser (value) {
-        if (value !== null && value !== undefined) {
-          const returnPath = this.$route.query.return_to || 'Profile'
-          this.$router.push({ name: returnPath })
+      authUser (authUser) {
+        if (authUser !== null && authUser !== undefined) {
+          var returnPath = this.$route.query.return_to
+          var { type, username } = authUser.user
+
+          // route the user to the relevant routes
+          if (!returnPath && type === 'administrator') {
+            returnPath = 'admin'
+          }
+          if (!returnPath && type !== 'administrator') {
+            returnPath = `users/${username}`
+          }
+
+          this.$router.push({ path: returnPath })
         }
       },
 
