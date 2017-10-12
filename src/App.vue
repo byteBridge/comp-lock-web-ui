@@ -1,111 +1,94 @@
 <template>
   <v-app light>
-    <v-navigation-drawer
-      persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      v-model="drawer"
-      enable-resize-watcher
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-        >
-          <v-list-tile-action>
-            <v-icon light v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-toolbar fixed>
-      <v-toolbar-side-icon @click.native.stop="drawer = !drawer" light></v-toolbar-side-icon>
-      <v-btn
-        icon
-        light
-        @click.native.stop="miniVariant = !miniVariant"
-      >
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        light
-        @click.native.stop="clipped = !clipped"
-      >
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        light
-        @click.native.stop="fixed = !fixed"
-      >
-        <v-icon>remove</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+    <v-toolbar light>
+
+      <v-toolbar-title class="teal--text"><v-btn flat :to="{name: 'Home'}"><v-icon left light class="teal--text">desktop_mac</v-icon> CompManager</v-btn></v-toolbar-title>
       <v-spacer></v-spacer>
+     
       <v-btn
-        icon
-        light
-        @click.native.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>menu</v-icon>
+        class="mr-0 ml-0"
+        flat
+        v-for="menu in toolbarMenuItems"
+        :key="menu.id"
+        :to="menu.url">
+        <v-icon left light>{{menu.icon}}</v-icon>
+        {{menu.title}}
       </v-btn>
+
+      <!-- action buttons (not requiring one to navigate to another route)-->
+      <v-btn
+        v-if="authenticated"
+        dark
+        class="mr-3 ml-0 orange white--text"
+        @click.native="signOut">
+        <v-icon left dark>lock_outline</v-icon>
+        Sign out
+      </v-btn>
+
     </v-toolbar>
     <main>
-      <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            <img src="/static/v.png" alt="Vuetify.js" class="mb-5">
-            <blockquote>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
-          </v-layout>
-        </v-slide-y-transition>
+      <v-container>
+        <v-flex xs12>
+          <router-view></router-view>
+        </v-flex>
       </v-container>
     </main>
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
-    >
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed">
-      <span>&copy; 2017</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
   export default {
-    data () {
-      return {
-        clipped: false,
-        drawer: true,
-        fixed: false,
-        items: [
-          { icon: 'bubble_chart', title: 'Inspire' }
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'Vuetify.js'
+    methods: {
+      signOut () {
+        this.$store.commit('setAuthUser', null)
+        this.$router.push({ name: 'SignIn' })
+      }
+    },
+
+    computed: {
+      authenticated () {
+        const token = this.authUser ? this.authUser.token : null
+        return !!token
+      },
+
+      authUser () {
+        return this.$store.getters.authUser || null
+      },
+
+      toolbarMenuItems () {
+        const authenticatedMenus = [
+          {
+            id: 'help',
+            title: 'Help',
+            url: '/help',
+            icon: 'help_outline'
+          },
+          {
+            id: 'profile',
+            title: this.authUser ? this.authUser.user.username : '',
+            url: '/profile',
+            icon: 'perm_identity'
+          }
+        ]
+
+        const unAuthenticatedMenus = [
+          {
+            id: 'signin',
+            title: 'Sign in',
+            url: '/signin',
+            icon: 'lock_open'
+          },
+          {
+            id: 'help',
+            title: 'Help',
+            url: '/help',
+            icon: 'help_outline'
+          }
+        ]
+
+        return this.authenticated
+          ? authenticatedMenus
+          : unAuthenticatedMenus
       }
     }
   }
