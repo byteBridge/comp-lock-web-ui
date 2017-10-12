@@ -2,7 +2,7 @@
   <v-app light>
     <v-toolbar light>
 
-      <v-toolbar-title class="teal--text"><v-icon light class="teal--text">desktop_mac</v-icon> CompManager</v-toolbar-title>
+      <v-toolbar-title class="teal--text"><v-btn flat :to="{name: 'Home'}"><v-icon left light class="teal--text">desktop_mac</v-icon> CompManager</v-btn></v-toolbar-title>
       <v-spacer></v-spacer>
      
       <v-btn
