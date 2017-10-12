@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Profile from '@/components/Profile'
+import Home from '@/components/Home'
+import Admin from '@/components/Admin'
 import SignIn from '@/components/SignIn'
 import Help from '@/components/Help'
 
@@ -11,9 +13,26 @@ const router = new Router({
   routes: [
     {
       // for now lets treat the he
-      path: '/profile',
+      path: '/users/:username',
       name: 'Profile',
       component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
+      // for now lets treat the he
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+
+    {
+      // for now lets treat the he
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
       meta: {
         requiresAuth: true
       }
@@ -33,7 +52,7 @@ const router = new Router({
 
     {
       path: '*',
-      redirect: '/profile'
+      redirect: '/'
     }
   ]
 })
@@ -50,7 +69,7 @@ router.beforeEach((to, from, next) => {
     next({
       name: 'SignIn',
       query: {
-        return_to: to.name
+        return_to: to.path
       }
     })
   } else {
