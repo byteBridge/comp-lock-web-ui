@@ -1,21 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Profile from '@/components/Profile'
-import Home from '@/components/Home'
-import Admin from '@/components/Admin'
-import SignIn from '@/components/SignIn'
-import Help from '@/components/Help'
-
 import store from '@/store'
+
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     {
       // for now lets treat the he
-      path: '/users/:username',
+      path: '/users',
       name: 'Profile',
-      component: Profile,
+      component: require('@/components/Profile'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    {
+      // for now lets treat the he
+      path: '/users/:username',
+      name: 'User',
+      component: require('@/components/Profile'),
       meta: {
         requiresAuth: true
       }
@@ -25,29 +30,63 @@ const router = new Router({
       // for now lets treat the he
       path: '/',
       name: 'Home',
-      component: Home
+      component: require('@/components/Home')
     },
 
     {
       // for now lets treat the he
       path: '/admin',
       name: 'Admin',
-      component: Admin,
+      component: require('@/components/Admin'),
       meta: {
         requiresAuth: true
-      }
+      },
+      children: [
+        {
+          // for now lets treat the he
+          path: '/',
+          component: require('@/components/AdminOverview'),
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
+          path: 'new-account',
+          component: require('@/components/CreateAccount'),
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
+          path: 'users',
+          component: require('@/components/ViewAccounts'),
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
+          path: 'settings',
+          component: require('@/components/AdminSettings'),
+          meta: {
+            requiresAuth: true
+          }
+        }
+      ]
     },
 
     {
       path: '/signin',
       name: 'SignIn',
-      component: SignIn
+      component: require('@/components/SignIn')
     },
 
     {
       path: '/help',
       name: 'Help',
-      component: Help
+      component: require('@/components/Help')
     },
 
     {
