@@ -1,6 +1,6 @@
 {
   "name": "comp-lock-web-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Platform to manage the users and view help.",
   "author": "Kudakwashe Paradzayi <kgparadzayi@gmail.com>",
   "private": true,
