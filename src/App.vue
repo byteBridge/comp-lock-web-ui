@@ -1,8 +1,19 @@
 <template>
-  <v-app light>
-    <v-toolbar light>
+  <v-app light id="app">
 
-      <v-toolbar-title class="teal--text"><v-btn flat :to="{name: 'Home'}"><v-icon left light class="teal--text">desktop_mac</v-icon> CompManager</v-btn></v-toolbar-title>
+    <app-alert :alert="alert" :showAlert="showAlert"></app-alert>
+    <!-- the admin navigation drawer -->
+    <app-admin-navigation-drawer v-if="authUser && authUser.user.type==='administrator'"></app-admin-navigation-drawer>
+
+    <v-toolbar light app clipped-right fixed>
+      <v-toolbar-title
+        class="teal--text">
+        <v-btn flat :to="{ name: 'Home' }">
+          <v-icon left light class="teal--text">desktop_mac</v-icon>
+          CompManager
+          </v-btn>
+      </v-toolbar-title>
+
       <v-spacer></v-spacer>
      
       <v-btn
@@ -26,26 +37,43 @@
       </v-btn>
 
     </v-toolbar>
+
+    <!-- The Main content -->
     <main>
-      <v-container>
-        <v-flex xs12>
-          <router-view></router-view>
-        </v-flex>
+      <v-container id="wrapping" fluid>
+        <v-layout>
+          <v-flex sm8>
+            <router-view></router-view>
+          </v-flex>
+        </v-layout>
       </v-container>
     </main>
+
   </v-app>
 </template>
 
 <script>
+  import AppAdminNavigationDrawer from '@/components/AppAdminNavigationDrawer'
+  import AppAlert from '@/components/AppAlert'
+  
   export default {
+    data () {
+      return {
+        showAlert: false
+      }
+    },
     methods: {
       signOut () {
         this.$store.commit('setAuthUser', null)
         this.$router.push({ name: 'SignIn' })
       }
     },
-
+    components: { AppAlert, AppAdminNavigationDrawer },
     computed: {
+      alert () {
+        this.showAlert = this.$store.getters.alert.show
+        return this.$store.getters.alert
+      },
       authenticated () {
         const token = this.authUser ? this.authUser.token : null
         return !!token
