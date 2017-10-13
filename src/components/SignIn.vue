@@ -2,19 +2,6 @@
   <v-container fluid>
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
-        <!-- show alerts using the snackbar -->
-        <v-snackbar
-          :success="alert.type === 'success'"
-          :warning="alert.type === 'warning'"
-          :info="alert.type === 'info'"
-          :error="alert.type === 'error'"
-          :timeout="2000"
-          bottom right
-          v-model="alert.show"
-        >
-          {{ alert.title }}
-          <v-btn small fab class="orange elevation-4" @click.native="alert.title = false"><v-icon dark class="white--text">cancel</v-icon></v-btn>
-        </v-snackbar>
 
         <v-card  class="login container">
           <v-card-title ><h3 class="teal--text headline"> Sign in</h3></v-card-title>
