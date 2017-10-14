@@ -25,7 +25,7 @@
       <td class="text-xs-left">{{ props.item.s_name }}</td>
       <td class="text-xs-right"><v-icon :class="{ 'red--text': props.item.blocked === true, 'green--text':props.item.blocked===false}">fiber_manual_record</v-icon></td>
       <td class="text-xs-right">{{ props.item.gender }}</td>
-      <td><v-btn flat class="teal--text"><v-icon>open_in_new</v-icon> View Details</v-btn></td>
+      <td><v-btn to="/admin/users/kudakwashe" flat class="teal--text"><v-icon>open_in_new</v-icon> View Details</v-btn></td>
     </template>
     </v-data-table>
     </v-card-text>

@@ -68,6 +68,14 @@ const router = new Router({
         },
         {
           // for now lets treat the he
+          path: 'users/:username',
+          component: require('@/components/AdminViewAccount'),
+          meta: {
+            requiresAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
           path: 'settings',
           component: require('@/components/AdminSettings'),
           meta: {
