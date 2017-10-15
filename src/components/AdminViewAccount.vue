@@ -5,8 +5,9 @@
         {{user.f_name}} {{ user.s_name}}
       <v-chip small label outline class="teal">{{user.type}}</v-chip>
       <v-spacer></v-spacer>
-      <v-btn class="elevation-1 orange white--text"><v-icon>block</v-icon>Block</v-btn>
-      <v-btn class="elevation-1 red white--text"><v-icon>delete</v-icon>Delete</v-btn>
+      <v-btn class="elevation-1 teal--text"><v-icon left class="teal--text">print</v-icon>Print Report</v-btn></vr>
+      <v-btn class="elevation-1  orange--text"><v-icon left class="orange--text">block</v-icon>Block</v-btn>
+      <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
     </v-toolbar>
   
   <v-card v-if="user.history && user.history.length > 1"  class="mt-2" style="height:300px;">
