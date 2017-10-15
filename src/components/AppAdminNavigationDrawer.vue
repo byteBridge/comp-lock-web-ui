@@ -2,7 +2,7 @@
     <v-navigation-drawer
       permanent
       light
-      right
+      left
       enable-resize-watcher
       absolute
       class="elevation-1"

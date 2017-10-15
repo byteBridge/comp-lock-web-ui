@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar class="mt-5 teal--text">
+    <v-toolbar class="teal--text">
       <v-icon class="teal--text">perm_identity</v-icon>
         {{user.f_name}} {{ user.s_name}}
       <v-chip small label outline class="teal">{{user.type}}</v-chip>

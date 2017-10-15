@@ -5,7 +5,7 @@
     <!-- the admin navigation drawer -->
     <app-admin-navigation-drawer v-if="authUser && authUser.user.type==='administrator'"></app-admin-navigation-drawer>
 
-    <v-toolbar light app clipped-right fixed>
+    <v-toolbar light app clipped-left fixed>
       <v-toolbar-title
         class="teal--text">
         <v-btn flat :to="{ name: 'Home' }">
@@ -40,13 +40,11 @@
 
     <!-- The Main content -->
     <main>
-      <v-container id="wrapping" fluid>
-        <v-layout>
-          <v-flex sm8>
+      <v-content>
+        <v-container id="wrapping" fluid>
             <router-view></router-view>
-          </v-flex>
-        </v-layout>
-      </v-container>
+        </v-container>
+      </v-content>
     </main>
 
   </v-app>
