@@ -10,7 +10,7 @@
       <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
     </v-toolbar>
   
-  <v-card v-if="user.history && user.history.length > 1"  class="mt-2" style="height:300px;">
+  <v-card v-if="user.history"  class="mt-2" style="height:300px;">
       <v-btn-toggle v-model.number="daysBack" style="float:right;">
         <v-btn class="teal--text" flat :value="7">
           Past week
@@ -27,7 +27,7 @@
       </v-btn-toggle>
     <line-chart :height="110" :data="user.history" :daysBack="daysBack"></line-chart>
   </v-card>
-   <v-card  v-if="user.history && user.history.length > 1" class="mt-2">
+   <v-card  v-if="user.history" class="mt-2">
      <v-card-title>
        History
        <v-spacer></v-spacer>
@@ -99,6 +99,7 @@ export default {
       .get(`/users/${this.$route.params.username}/history?token=${this.$store.getters.authUser.token}`)
       .then(res => {
         this.user = res.data.user
+        console.log(this.user)
       })
       .catch(res => {
         console.log(res.status)
