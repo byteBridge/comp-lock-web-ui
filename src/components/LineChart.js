@@ -28,7 +28,7 @@ function normaliseData (rawData, daysBack) {
   })
 
   return {
-    labels,
+    labels: labels.map(label => moment(label).format('MMM DD')),
     datasets: [{
       label: 'Login activities',
       borderColor: 'teal',
@@ -61,9 +61,6 @@ export default {
             ticks: {
               max: 30 // to be replaced by the time limits from api
             }
-          }],
-          xAxes: [{
-            type: 'time'
           }]
         }
       }
