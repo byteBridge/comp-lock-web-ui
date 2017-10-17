@@ -25,6 +25,8 @@ function normaliseData (rawData, daysBack) {
 
     // push the minutes to be plotted on graph
     data.push(minutes)
+    // reset the minutes
+    minutes = 0
   })
 
   return {
