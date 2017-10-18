@@ -1,11 +1,18 @@
 <template>
   <div>
-    <v-toolbar class="teal--text">
-      <v-icon class="teal--text">perm_identity</v-icon>
+    <v-toolbar dark color="teal" extended>
+    <v-btn flat><v-icon left>chevron_left</v-icon> Back</v-btn>
+    <v-toolbar-title class="white--text" slot="extension">
         {{user.f_name}} {{ user.s_name}}
-      <v-chip small label outline class="teal">{{user.type}}</v-chip>
-      <v-spacer></v-spacer>
-      <v-btn class="elevation-1 teal--text"><v-icon left class="teal--text">print</v-icon>Print Report</v-btn></vr>
+      <v-chip small label outline color="green" text-color="white">
+        <v-avatar>
+           <v-icon class="white--text">perm_identity</v-icon>
+        </v-avatar>
+        {{user.type}}
+      </v-chip>
+    </v-toolbar-title>
+    <v-spacer></v-spacer>
+     <v-btn class="elevation-1 teal--text"><v-icon left class="teal--text">print</v-icon>Print Report</v-btn></vr>
       
       <!-- Blocking and unblocking user -->
       <v-btn
@@ -23,8 +30,8 @@
         unBlock</v-btn>
      
       <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
-    </v-toolbar>
-  
+  </v-toolbar>
+ 
   <v-card v-if="user.history"  class="mt-2" style="height:300px;">
       <v-btn-toggle v-model.number="daysBack" style="float:right;">
         <v-btn class="teal--text" flat :value="7">
