@@ -95,14 +95,16 @@ export default {
     }
   },
   mounted () {
+    let config = {
+      headers: { Authorization: this.$store.getters.authUser.token }
+    }
+
     this.$http
-      .get(`/users/${this.$route.params.username}/history?token=${this.$store.getters.authUser.token}`)
+      .get(`/users/${this.$route.params.username}/history`, config)
       .then(res => {
         this.user = res.data.user
-        console.log(this.user)
       })
       .catch(res => {
-        console.log(res.status)
       })
   }
 }

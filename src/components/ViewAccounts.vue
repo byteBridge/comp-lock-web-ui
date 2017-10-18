@@ -48,7 +48,11 @@
       }
     },
     mounted () {
-      this.$http.get(`/users?token=${this.$store.getters.authUser.token}`)
+      let config = {
+        headers: { Authorization: this.$store.getters.authUser.token }
+      }
+
+      this.$http.get(`/users`, config)
         .then(res => {
           this.users = res.data.users
           console.log(res)

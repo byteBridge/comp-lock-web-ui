@@ -92,15 +92,20 @@
     },
     methods: {
       submit () {
+        let config = {
+          headers: { Authorization: this.$store.getters.authUser.token }
+        }
         console.log(this.name, this.surname, this.username, this.password, this.selectGender, this.selectAccountType)
-        this.$http.post('/auth/register?token=' + this.$store.getters.authUser.token, stringify({
-          f_name: this.name,
-          s_name: this.surname,
-          username: this.username,
-          password: this.password,
-          type: this.selectAccountType,
-          gender: this.selectGender
-        }))
+        this.$http.post('/auth/register',
+          stringify({
+            f_name: this.name,
+            s_name: this.surname,
+            username: this.username,
+            password: this.password,
+            type: this.selectAccountType,
+            gender: this.selectGender
+          }),
+          config)
         .then(account => {
           this.$store.commit('showAlert', {
             title: `Successfully created ${this.name} ${this.surname}'s account`,
