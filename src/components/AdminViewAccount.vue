@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <!-- Showing loading progress -->
+  <div v-if="!user.username">
+    <v-progress-circular indeterminate v-bind:size="50" color="teal"></v-progress-circular>
+    <h3 class="title"> Loading account info. Please wait</h3>
+    <v-progress-linear v-bind:indeterminate="true" color="teal"></v-progress-linear>
+  </div>
+
+  <!-- Only showing the actual content when loading's done -->
+  <div v-else>
     <v-toolbar dark color="teal" extended>
     <v-btn flat><v-icon left>chevron_left</v-icon> Back</v-btn>
     <v-toolbar-title class="white--text" slot="extension">
@@ -32,7 +40,12 @@
       <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
   </v-toolbar>
  
-  <v-card v-if="user.history"  class="mt-2" style="height:300px;">
+  <!-- inform the librarian so that he/she is not surprised to see missing data -->
+  <v-alert color="info" icon="info" value="true" dismissible v-model="alert" v-if="user.history.length === 0">
+      {{user.f_name}} {{user.s_name}}'s account has been never used to access the computers.
+  </v-alert>
+
+  <v-card class="mt-2" style="height:300px;">
       <v-btn-toggle v-model.number="daysBack" style="float:right;">
         <v-btn class="teal--text" flat :value="7">
           Past week
@@ -49,7 +62,7 @@
       </v-btn-toggle>
     <line-chart :height="110" :data="user.history" :daysBack="daysBack"></line-chart>
   </v-card>
-   <v-card  v-if="user.history" class="mt-2">
+   <v-card class="mt-2">
      <v-card-title>
        History
        <v-spacer></v-spacer>
@@ -85,10 +98,6 @@
         </div>
      </v-card-text>
    </v-card>
-
-    <v-card class="mt-2" v-else>
-      <v-card-text>{{user.f_name}} {{user.s_name}}'s account has never used to access the computers.</v-card-text>
-    </v-card>
   </div>
 </template>
 
@@ -113,7 +122,8 @@ export default {
         { title: 'Past month', value: 30 },
         { title: 'Past three months', value: 90 }
       ],
-      daysBack: 7
+      daysBack: 7,
+      alert: true
     }
   },
   mounted () {
