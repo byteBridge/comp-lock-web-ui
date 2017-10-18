@@ -74,6 +74,11 @@
       },
       authenticated () {
         const token = this.authUser ? this.authUser.token : null
+        // this trick is to set the Authorisation headers once the
+        // token of the authUser changes. It will make all post and
+        // put requests have the Authorization header without fear of
+        // preflight issues.
+        this.$http.defaults.headers.common['Authorization'] = token
         return !!token
       },
 
