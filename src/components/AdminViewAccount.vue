@@ -6,7 +6,22 @@
       <v-chip small label outline class="teal">{{user.type}}</v-chip>
       <v-spacer></v-spacer>
       <v-btn class="elevation-1 teal--text"><v-icon left class="teal--text">print</v-icon>Print Report</v-btn></vr>
-      <v-btn class="elevation-1  orange--text"><v-icon left class="orange--text">block</v-icon>Block</v-btn>
+      
+      <!-- Blocking and unblocking user -->
+      <v-btn
+        v-if = "user.blocked === false"
+        class="elevation-1  orange--text"
+        @click="blockUser">
+        <v-icon left class="orange--text">block</v-icon>
+        Block</v-btn>
+
+      <v-btn
+        v-if = "user.blocked === true"
+        class="elevation-1  green--text"
+        @click="unblockUser">
+        <v-icon left class="green--text">block</v-icon>
+        unBlock</v-btn>
+     
       <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
     </v-toolbar>
   
@@ -95,17 +110,59 @@ export default {
     }
   },
   mounted () {
-    let config = {
-      headers: { Authorization: this.$store.getters.authUser.token }
-    }
-
     this.$http
-      .get(`/users/${this.$route.params.username}/history`, config)
+      .get(`/users/${this.$route.params.username}/history`, this.config)
       .then(res => {
         this.user = res.data.user
       })
       .catch(res => {
       })
+  },
+
+  computed: {
+    config () {
+      return {
+        headers: { Authorization: this.$store.getters.authUser.token }
+      }
+    }
+  },
+
+  methods: {
+    blockUser () {
+      this.$http
+        .put(`/users/${this.$route.params.username}/block`, this.config)
+        .then(() => {
+          this.user.blocked = true
+          this.$store.commit('showAlert', {
+            title: `Successfully blocked ${this.user.f_name} ${this.user.s_name}'s account`,
+            type: 'success',
+            show: true
+          })
+        })
+        .catch(() => this.$store.commit('showAlert', {
+          title: `An error occured and could not block ${this.user.f_name} ${this.user.s_name}'s account`,
+          type: 'error',
+          show: true
+        }))
+    },
+
+    unblockUser () {
+      this.$http // the auth headers are auto injected @ <App/>
+        .put(`/users/${this.$route.params.username}/unblock`)
+        .then(() => {
+          this.user.blocked = false
+          this.$store.commit('showAlert', {
+            title: `Successfully unblocked ${this.user.f_name} ${this.user.s_name}'s account`,
+            type: 'success',
+            show: true
+          })
+        })
+        .catch(() => this.$store.commit('showAlert', {
+          title: `An error occured and could not unblock ${this.user.f_name} ${this.user.s_name}'s account`,
+          type: 'error',
+          show: true
+        }))
+    }
   }
 }
 </script>
