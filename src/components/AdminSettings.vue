@@ -1,13 +1,16 @@
 <template>
   <div>
-      Hey there this is the settings page
+      <AppTimeLimits></AppTimeLimits>
   </div>
 </template>
 
 <script>
-export default {
-
-}
+  import AppTimeLimits from '@/components/AdminSettingsTimeLimits'
+  export default {
+    components: {
+      AppTimeLimits
+    }
+  }
 </script>
 
 <style>
