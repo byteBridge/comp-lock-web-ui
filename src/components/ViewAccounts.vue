@@ -25,7 +25,7 @@
       hide-actions
       class="elevation-1"
     >
-    <template slot="items" scope="props" @click="alert('hello world')">
+    <template slot="items" scope="props">
       <td class="text-xs-left">
         <v-btn :to="{ path: `/admin/users/${props.item.username}` }" flat class="teal--text">
           <v-icon left>open_in_new</v-icon>
