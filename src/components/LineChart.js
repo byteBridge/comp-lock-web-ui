@@ -42,7 +42,7 @@ function normaliseData (rawData, daysBack) {
 
 export default {
   extends: Line,
-  props: ['data', 'daysBack'],
+  props: ['data', 'daysBack', 'userType'],
   watch: {
     daysBack (value) { this.renderChart(normaliseData(this.data, Number(this.daysBack)), this.chartConfig) }
   },
@@ -61,7 +61,7 @@ export default {
         scales: {
           yAxes: [{
             ticks: {
-              max: 30 // to be replaced by the time limits from api
+              max: 60 // to be replaced by the time limits from api
             }
           }]
         }
@@ -69,6 +69,29 @@ export default {
     }
   },
   mounted () {
-    this.renderChart(normaliseData(this.data, Number(this.daysBack)), this.chartConfig)
+    this.$http.get(`/users/timelimits/${this.userType}`)
+      .then(res => {
+        const timeLimit = res.data.data.time_limit
+        if (timeLimit) this.chartConfig.scales.yAxes[0].ticks.max = this.timeToMinutes(timeLimit)
+
+        // render the chart with the new time limits
+        this.renderChart(normaliseData(this.data, Number(this.daysBack)), this.chartConfig)
+      })
+      .catch(() => {
+        // Still render the chart without the time limits
+        // it will use the default values
+        this.renderChart(normaliseData(this.data, Number(this.daysBack)), this.chartConfig)
+      })
+  },
+  methods: {
+    // gets time in the format <hours>:<minutes>
+    // and returns the total number of minutes
+    timeToMinutes (time) {
+      time = time.split(':')
+      let hours = time[0]
+      let minutes = time[1]
+
+      return Number(minutes) + Number(hours) * 60
+    }
   }
 }
