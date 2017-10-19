@@ -60,7 +60,7 @@
           past 3 months
         </v-btn>
       </v-btn-toggle>
-    <line-chart :height="110" :data="user.history" :daysBack="daysBack"></line-chart>
+    <line-chart :height="110" :data="user.history" :daysBack="daysBack" :userType="user.type"></line-chart>
   </v-card>
    <v-card class="mt-2">
      <v-card-title>
