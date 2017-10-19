@@ -26,7 +26,12 @@
       class="elevation-1"
     >
     <template slot="items" scope="props" @click="alert('hello world')">
-      <td class="text-xs-left"><v-btn :to="{ path: `/admin/users/${props.item.username}` }" flat class="teal--text"> <v-icon>open_in_new</v-icon> {{ props.item.s_name }} {{ props.item.f_name }}</v-btn></td>
+      <td class="text-xs-left">
+        <v-btn :to="{ path: `/admin/users/${props.item.username}` }" flat class="teal--text">
+          <v-icon left>open_in_new</v-icon>
+          {{ props.item.s_name }} {{ props.item.f_name }}
+        </v-btn>
+      </td>
       <td class="text-xs-left">{{ props.item.type }}</td>
       <td class="text-xs-right">{{ props.item.gender }}</td>
       <td class="text-xs-right">
