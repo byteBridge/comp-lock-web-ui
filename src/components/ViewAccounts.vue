@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-5">
+  <v-card>
     <v-card-title>
       User Accounts
       <v-spacer></v-spacer>
