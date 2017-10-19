@@ -9,7 +9,7 @@
   <!-- Only showing the actual content when loading's done -->
   <div v-else>
     <v-toolbar dark color="teal" extended>
-    <v-btn flat><v-icon left>chevron_left</v-icon> Back</v-btn>
+    <v-btn flat :to="{ path: '/admin/users' }"><v-icon left>chevron_left</v-icon> Back</v-btn>
     <v-toolbar-title class="white--text" slot="extension">
         {{user.f_name}} {{ user.s_name}}
       <v-chip small label outline color="green" text-color="white">
