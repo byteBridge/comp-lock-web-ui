@@ -62,10 +62,24 @@
     methods: {
       checkPassword () {
         this.deleting = true
+
+        // chek if the user is deleting his/her own account
+        if (this.user.username === this.$store.getters.authUser.user.username) {
+          this.alert.message = 'You can not delete your own account.'
+          this.alert.type = 'warning'
+          this.alert.value = true
+          this.deleting = false
+          return
+        }
+
+        // try to login to check if the password entered is correct
         this.$http.post('/auth/login', {
           username: this.$store.getters.authUser.user.username,
           password: this.password
-        }).then(res => {
+        })
+
+        // after a successfull vetting of the password go ahead and delete the account
+        .then(res => {
           if (res.status === 200) {
             this.$http.delete(`/users/${this.user.username}`)
               .then(res => {
@@ -75,9 +89,12 @@
                 this.deleting = false
               })
           }
-        }).catch(error => {
+        })
+
+        // Check if the user entered invalid details its just a server error
+        .catch(error => {
+          // check for invalid password
           if (error.response.status === 400 || error.response.status === 401) {
-            // invalid password
             this.alert.message = 'Invalid password. Please enter the correct password.'
             this.alert.type = 'error'
             this.alert.value = true
