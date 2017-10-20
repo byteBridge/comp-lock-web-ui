@@ -5,8 +5,10 @@
       <v-toolbar dark dense class="primary">
         <v-toolbar-title>Online Accounts</v-toolbar-title>
         <v-spacer></v-spacer>
-          <v-text-field
-            class="white"
+          <v-card dark class="info darken-4 elevation-3">
+            <v-text-field
+            dark
+            class="white--text ml-1 mr-1"
             style="border-radius:2px;"
             append-icon="search"
             label="Search"
@@ -14,6 +16,7 @@
             hide-details
             v-model="searchText"
           ></v-text-field>
+          </v-card>
         </v-toolbar>
      </v-card-title>
      <v-card-text>
