@@ -5,7 +5,7 @@
     <!-- the admin navigation drawer -->
     <app-admin-navigation-drawer v-if="authUser && authUser.user.type==='administrator'"></app-admin-navigation-drawer>
 
-    <v-toolbar light app clipped-left fixed>
+    <v-toolbar light app clipped-left fixed v-if="$route.path !== '/' && $route !== '/signin'">
       <v-toolbar-title
         class="teal--text">
         <v-btn flat :to="{ name: 'Home' }">
@@ -15,16 +15,6 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-     
-      <v-btn
-        class="mr-0 ml-0"
-        flat
-        v-for="menu in toolbarMenuItems"
-        :key="menu.id"
-        :to="menu.url">
-        <v-icon left light>{{menu.icon}}</v-icon>
-        {{menu.title}}
-      </v-btn>
 
       <!-- action buttons (not requiring one to navigate to another route)-->
       <v-btn
@@ -34,6 +24,17 @@
         @click.native="signOut">
         <v-icon left dark>lock_outline</v-icon>
         Sign out
+      </v-btn>
+
+      <v-btn
+        class="mr-2"
+        v-else
+        flat
+        v-for="menu in toolbarMenuItems"
+        :key="menu.id"
+        :to="menu.url">
+        <v-icon left light>{{menu.icon}}</v-icon>
+        {{menu.title}}
       </v-btn>
 
     </v-toolbar>
@@ -87,39 +88,16 @@
       },
 
       toolbarMenuItems () {
-        const authenticatedMenus = [
-          {
-            id: 'help',
-            title: 'Help',
-            url: '/help',
-            icon: 'help_outline'
-          },
-          {
-            id: 'profile',
-            title: this.authUser ? this.authUser.user.username : '',
-            url: '/profile',
-            icon: 'perm_identity'
-          }
-        ]
-
-        const unAuthenticatedMenus = [
+        const menu = [
           {
             id: 'signin',
             title: 'Sign in',
             url: '/signin',
             icon: 'lock_open'
-          },
-          {
-            id: 'help',
-            title: 'Help',
-            url: '/help',
-            icon: 'help_outline'
           }
         ]
 
-        return this.authenticated
-          ? authenticatedMenus
-          : unAuthenticatedMenus
+        return menu
       }
     }
   }
