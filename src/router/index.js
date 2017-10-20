@@ -107,12 +107,6 @@ const router = new Router({
     },
 
     {
-      path: '/help',
-      name: 'Help',
-      component: require('@/components/Help')
-    },
-
-    {
       path: '*',
       redirect: '/'
     }
