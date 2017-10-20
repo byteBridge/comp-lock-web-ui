@@ -88,8 +88,6 @@
           v-bind:headers="headers"
           :items="user.history"
           :search="searchText"
-          v-bind:pagination.sync="pagination"
-          hide-actions
           class="elevation-1"
         >
         <template slot="items" scope="props" @click="alert('hello world')">
@@ -98,13 +96,7 @@
           <td class="text-xs-right">{{ props.item.start_time }}</td>
           <td class="text-xs-right">{{ props.item.duration }}</td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
-          From {{ pageStart }} to {{ pageStop }}
-        </template>
-        </v-data-table>
-        <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
-        </div>
+       </v-data-table>
      </v-card-text>
    </v-card>
   </div>
