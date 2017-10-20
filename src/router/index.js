@@ -4,31 +4,6 @@ import store from '@/store'
 
 Vue.use(Router)
 
-function adminRoute (from, to, next) {
-  const user = store.getters.authUser
-  const authenticated = (!!user === true && !!user.token === true)
-
-  if (authenticated && user.user.type === 'administrator') return next()
-
-  if (authenticated) {
-    return next({
-      // student attempted to open admin routes
-      name: 'SignIn',
-      query: {
-        return_to: to.path,
-        requires_admin: true
-      }
-    })
-  }
-  // user has not even logged in.
-  next({
-    name: 'SignIn',
-    query: {
-      return_to: to.path
-    }
-  })
-}
-
 const router = new Router({
   routes: [
     {
@@ -63,37 +38,64 @@ const router = new Router({
       path: '/admin',
       name: 'Admin',
       component: require('@/components/Admin'),
-      beforeEnter: adminRoute,
+      meta: {
+        requiresAuth: true,
+        requiresAdminAuth: true
+      },
       children: [
         {
           // for now lets treat the he
           path: '/',
           component: require('@/components/AdminOverview'),
-          beforeEnter: adminRoute
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
         },
         {
           // for now lets treat the he
           path: 'new-account',
           component: require('@/components/CreateAccount'),
-          beforeEnter: adminRoute
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
         },
         {
           // for now lets treat the he
           path: 'users',
           component: require('@/components/ViewAccounts'),
-          beforeEnter: adminRoute
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
+          path: 'users/online',
+          component: require('@/components/AdminOnlineAccounts'),
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
         },
         {
           // for now lets treat the he
           path: 'users/:username',
           component: require('@/components/AdminViewAccount'),
-          beforeEnter: adminRoute
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
         },
         {
           // for now lets treat the he
           path: 'settings',
           component: require('@/components/AdminSettings'),
-          beforeEnter: adminRoute
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
         }
       ]
     },
@@ -125,9 +127,22 @@ router.beforeEach((to, from, next) => {
     // if student, allow only to view own account
     // allow the user
     if (authenticated) {
-      if (to.params.username && to.params.username === user.user.username) {
+        // student attempted to open admin routes
+      if (to.meta.requiresAdminAuth && user.user.type !== 'administrator') {
+        return next({
+          name: 'SignIn',
+          query: {
+            return_to: to.path,
+            requires_admin: true
+          }
+        })
+      }
+
+      // Allow non admin only to view their accounts
+      if (to.params.username && to.params.username === user.user.username || user.user.type === 'administrator') {
         return next()
       }
+
       // user is trying to view another student's account
       store.commit('showAlert', {
         title: `You are attempting to open another user's account. You can only open your account`,
