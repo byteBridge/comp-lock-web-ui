@@ -1,6 +1,12 @@
 <template>
   <v-card>
- 
+    <!-- When admin want to delete account -->
+    <AppConfirmDeleteUser
+      :showDialog="showDeleteDialog"
+      :user="userToDelete"
+      @close="userToDelete = {}; showDeleteDialog = false;">
+    </AppConfirmDeleteUser>
+    
     <v-card-title>
       <v-toolbar dark dense class="teal">
     <v-toolbar-title>User Accounts</v-toolbar-title>
@@ -40,9 +46,12 @@
       </td>
       <td>
         <v-btn small icon><v-icon>print</v-icon></v-btn>
-        <v-btn small icon v-if="props.item.blocked"><v-icon>check</v-icon></v-btn>
-        <v-btn small icon v-if="!props.item.blocked"><v-icon>block</v-icon></v-btn>
-        <v-btn small icon><v-icon>delete</v-icon></v-btn>
+        <v-btn small icon v-if="props.item.blocked" @click="unblockUser(props.item)"><v-icon>check</v-icon></v-btn>
+        <v-btn small icon v-if="!props.item.blocked" @click="blockUser(props.item)"><v-icon>block</v-icon></v-btn>
+
+        <v-btn small icon @click.native="userToDelete = props.item; showDeleteDialog = true;">
+          <v-icon>delete</v-icon>
+        </v-btn>
       </td>
     </template>
     </v-data-table>
@@ -51,7 +60,9 @@
 </template>
 
 <script>
+  import AppConfirmDeleteUser from '@/components/AppConfirmDeleteUser'
   export default {
+    components: {AppConfirmDeleteUser},
     data () {
       return {
         headers: [
@@ -62,6 +73,8 @@
           { text: 'Actions', align: 'left' }
         ],
         users: [],
+        userToDelete: {},
+        showDeleteDialog: false,
         searchText: ''
       }
     },
@@ -73,8 +86,47 @@
       this.$http.get(`/users`, config)
         .then(res => {
           this.users = res.data.users
-          console.log(res)
         })
+    },
+
+    methods: {
+      blockUser (user) {
+        this.$http
+          .put(`/users/${user.username}/block`)
+          .then(() => {
+            user.blocked = true
+            this.$set(this.users, this.users.findIndex(u => u.username === user.username), user)
+            this.$store.commit('showAlert', {
+              title: `Successfully blocked ${user.f_name} ${user.s_name}'s account`,
+              type: 'success',
+              show: true
+            })
+          })
+          .catch(() => this.$store.commit('showAlert', {
+            title: `An error occured and could not block ${user.f_name} ${user.s_name}'s account`,
+            type: 'error',
+            show: true
+          }))
+      },
+
+      unblockUser (user) {
+        this.$http // the auth headers are auto injected @ <App/>
+          .put(`/users/${user.username}/unblock`)
+          .then(() => {
+            user.blocked = false
+            this.$set(this.users, this.users.findIndex(u => u.username === user.username), user)
+            this.$store.commit('showAlert', {
+              title: `Successfully unblocked ${user.f_name} ${user.s_name}'s account`,
+              type: 'success',
+              show: true
+            })
+          })
+          .catch(() => this.$store.commit('showAlert', {
+            title: `An error occured and could not unblock ${user.f_name} ${user.s_name}'s account`,
+            type: 'error',
+            show: true
+          }))
+      }
     }
   }
 </script>
