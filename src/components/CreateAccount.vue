@@ -1,5 +1,12 @@
 <template>
   <v-container>
+    <v-card>
+      <v-card-title>
+        <v-toolbar dense dark class="primary">
+          <v-toolbar-title>Create New Account</v-toolbar-title>
+        </v-toolbar>
+      </v-card-title>
+    <v-card-text>
     <v-layout>
         <v-flex xs12 sm6>
             <v-card class="mr-2">
@@ -71,6 +78,8 @@
             </v-card>
         </v-flex>
     </v-layout>
+    </v-card-text>
+    </v-card>
   </v-container>
 </template>
 
