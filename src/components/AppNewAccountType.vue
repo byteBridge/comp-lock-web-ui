@@ -1,12 +1,12 @@
 <template>
   <v-dialog v-model="dialog" persistent>
-  <v-btn dark class="green" slot="activator"><v-icon>add</v-icon>New account type</v-btn>
     <v-card>
       <v-alert :color="alert.type" icon="error" value="true" dismissible v-model="alert.value">
         {{ alert.message }}
       </v-alert>
       <v-card-title>
-        <div class="headline">New account type</div>
+        <div v-if="isEdit" class="headline teal--text">Update time limits</div>
+        <div v-else class="headline teal--text">New account type</div>
       </v-card-title>
       <v-card-text>
         <v-layout row wrap>
@@ -16,10 +16,11 @@
               hint="At least 3"
               v-model="userType"
               min="3"
+              :readonly = "isEdit"
             ></v-text-field>
           </v-flex>
 
-          <v-flex xs4 sm4>
+          <v-flex xs4 sm4 class="mr-3">
             <v-select
               v-bind:items="hours"
               v-model="selectedHours"
@@ -40,8 +41,9 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn class="teal white--text darken-1" @click.native="createUserType">Create</v-btn>
-        <v-btn class="orange--text darken-1" flat="flat" @click.native="exit">Cancel</v-btn>
+        <v-btn class="teal white--text darken-1" v-if="isEdit" @click.native="editTimeLimits">Update</v-btn>
+        <v-btn class="teal white--text darken-1" v-else @click.native="createUserType">Create</v-btn>
+        <v-btn class="teal--text darken-2" flat="flat" @click.native="exit">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -49,6 +51,27 @@
 
 <script>
   export default {
+    props: {
+      show: Boolean,
+      isEdit: Boolean,
+      editUserType: Object
+    },
+    watch: {
+      show (value) {
+        this.dialog = value
+
+        if (this.isEdit === true) {
+          this.userType = this.editUserType.user_type
+          let time = this.editUserType.time_limit.split(':')
+          this.selectedHours = Number(time[0])
+          this.selectedMinutes = Number(time[1])
+        } else {
+          this.userType = ''
+          this.selectedHours = ''
+          this.selectedMinutes = ''
+        }
+      }
+    },
     data () {
       return {
         dialog: false,
@@ -99,14 +122,39 @@
         })
       },
 
+      editTimeLimits () {
+        if (this.selectedHours.length === 0 || this.selectedMinutes.length === 0) {
+          this.alert.message = 'Please fill in all the fields'
+          this.alert.type = 'warning'
+          this.alert.value = true
+          return
+        }
+
+        this.$http.put(`/users/timelimits/${this.userType}`, {
+          timeLimits: `${this.selectedHours}:${this.selectedMinutes}`
+        })
+        .then(res => {
+          this.alert.message = res.data.message
+          this.alert.type = 'success'
+          this.alert.value = true
+        })
+        .catch(res => {
+          this.alert.message = res.response.data.message || 'An error occured.'
+          this.alert.type = 'error'
+          this.alert.value = true
+        })
+      },
+
       clear () {
         this.userType = ''
         this.selectedHours = ''
         this.selectedMinutes = ''
+        this.isEdit = false
       },
 
       exit () {
         this.dialog = false
+        this.alert.value = false
         this.clear()
         this.$emit('close')
       }
