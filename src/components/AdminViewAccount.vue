@@ -8,6 +8,13 @@
 
   <!-- Only showing the actual content when loading's done -->
   <div v-else>
+    <!-- dialog to confirm the permission to delete a user -->
+    <AppConfirmDeleteUser
+      :showDialog="showDeleteDialog"
+      :user="user"
+      @close="$router.push('/admin/users')">
+    </AppConfirmDeleteUser>
+
     <v-toolbar dark color="teal" extended>
     <v-btn flat :to="{ path: '/admin/users' }"><v-icon left>chevron_left</v-icon> Back</v-btn>
     <v-toolbar-title class="white--text" slot="extension">
@@ -35,9 +42,11 @@
         class="elevation-1  green--text"
         @click="unblockUser">
         <v-icon left class="green--text">block</v-icon>
-        unBlock</v-btn>
+        unBlock
+      </v-btn>
      
-      <v-btn class="elevation-1 red--text"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
+     <!-- show the delete user dialog box -->
+      <v-btn class="elevation-1 red--text" @click.native="deleteUser"><v-icon left class="red--text">delete</v-icon>Delete</v-btn>
   </v-toolbar>
  
   <!-- inform the librarian so that he/she is not surprised to see missing data -->
@@ -103,11 +112,14 @@
 
 <script>
 import LineChart from '@/components/LineChart.js'
+import AppConfirmDeleteUser from '@/components/AppConfirmDeleteUser'
+
 export default {
-  components: { LineChart },
+  components: { LineChart, AppConfirmDeleteUser },
   data () {
     return {
       user: {},
+      showDeleteDialog: false,
       headers: [
         { text: 'Computer Name', value: 'computer_name', align: 'left' },
         { text: 'Date', value: 'log_date', align: 'left' },
@@ -126,6 +138,7 @@ export default {
       alert: true
     }
   },
+
   mounted () {
     this.$http
       .get(`/users/${this.$route.params.username}/history`, this.config)
@@ -179,6 +192,10 @@ export default {
           type: 'error',
           show: true
         }))
+    },
+
+    deleteUser () {
+      this.showDeleteDialog = true
     }
   }
 }
