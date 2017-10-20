@@ -23,8 +23,17 @@ const mutations = {
     state.authUser = payload
   },
 
-  setAlert (state, payload) {
+  closeAlert (state) {
+    state.alert = state.alert = {
+      title: '',
+      type: '',
+      show: false
+    }
+  },
+
+  showAlert (state, payload) {
     state.alert = payload
+    state.alert.show = true
   }
 }
 
@@ -35,7 +44,7 @@ const actions = {
       const authUser = { token, user }
       commit('setAuthUser', authUser)
     }).catch(error => {
-      commit('setAlert', {
+      commit('showAlert', {
         title: error.message,
         type: 'error',
         show: true

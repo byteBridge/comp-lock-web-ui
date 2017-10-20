@@ -3,7 +3,7 @@
       <v-layout row-sm column child-flex-sm>
           <v-card class="ma-3">
               <v-card-title primary-title>
-                  <div class="headline">{{ authUser.f_name }} {{ authUser.s_name }}</div>
+                  <div class="headline">{{ authUser.user.f_name }} {{ authUser.user.s_name }}</div>
                 </v-card-title>
                 <v-card-text>
                   <div>
@@ -20,7 +20,7 @@
                   </div>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn dark block class="orange"><v-icon dark>security</v-icon> Change My Password</v-btn>
+                  <v-btn dark block class="secondary"><v-icon dark>security</v-icon> Change My Password</v-btn>
                 </v-card-actions>
           </v-card>
           <v-card dark class="secondary ma-1">
@@ -35,11 +35,14 @@ import user from '../modules/user'
 
 export default {
   computed: {
-    authUser () { return this.$store.getters.authUser.user }
+    authUser () { return this.$store.getters.authUser }
   },
-  mounted () { this.loadProfile() },
+  mounted () {
+    console.log(this.$route.params)
+    // this.loadProfile()
+  },
   methods: {
-    loadProfile () { user.getStudentProfile('kudakwashe').then().catch() }
+    loadProfile () { user.getStudentProfile('kudakwashe', this.authUser.token).then().catch() }
   },
   data () {
     return {

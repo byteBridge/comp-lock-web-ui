@@ -1,21 +1,24 @@
 {
   "name": "comp-lock-web-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Platform to manage the users and view help.",
   "author": "Kudakwashe Paradzayi <kgparadzayi@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
+    "build-and-install": "npm run build && cd dist && npm run one-click-update",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "chart.js": "^2.7.0",
     "querystring": "^0.2.0",
     "vue": "^2.3.4",
+    "vue-chartjs": "^3.0.0",
     "vue-router": "^2.3.1",
-    "vuetify": "^0.13.0",
+    "vuetify": "^0.16.6",
     "vuex": "^2.3.1"
   },
   "devDependencies": {
