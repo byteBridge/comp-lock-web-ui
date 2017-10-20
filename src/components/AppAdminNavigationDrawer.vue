@@ -63,17 +63,43 @@
       return {
         mini: true,
         drawer: true,
-        dialog: false,
-        items: [
-           { icon: 'timeline', text: 'Overview', url: '/admin', model: true },
-           { icon: 'person_add', text: 'Create Account', url: '/admin/new-account', model: false },
-           { icon: 'people', text: 'View Account', url: '/admin/users', model: false },
-           { icon: 'settings', text: 'Settings', url: '/admin/settings', model: false }
+        dialog: false
+      }
+    },
+
+    computed: {
+      items () {
+        return [
+          {
+            icon: 'account_circle',
+            text: 'View Online Accounts',
+            url: '/admin/users/online',
+            model: this.$route.name === 'OnlineUsers'
+          },
+          {
+            icon: 'person_add',
+            text: 'Create New Account',
+            url: '/admin/new-account',
+            model: this.$route.name === 'NewAccount'
+          },
+          {
+            icon: 'people',
+            text: 'View Accounts',
+            url: '/admin/users',
+            model: this.$route.name === 'Users' || this.routeName === 'AdminUser' },
+          {
+            icon: 'settings',
+            text: 'Settings',
+            url: '/admin/settings',
+            model: this.$route.name === 'Settings'
+          }
         ]
       }
     },
+
     methods: {
       goTo (url) {
+        console.log(this.$route)
         this.$router.push({ path: url })
       }
     }

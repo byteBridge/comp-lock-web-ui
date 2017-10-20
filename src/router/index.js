@@ -44,9 +44,9 @@ const router = new Router({
       },
       children: [
         {
-          // for now lets treat the he
+          // The online users is the default view of the admin
           path: '/',
-          component: require('@/components/AdminOverview'),
+          redirect: '/admin/users/online',
           meta: {
             requiresAuth: true,
             requiresAdminAuth: true
@@ -55,6 +55,7 @@ const router = new Router({
         {
           // for now lets treat the he
           path: 'new-account',
+          name: 'NewAccount',
           component: require('@/components/CreateAccount'),
           meta: {
             requiresAuth: true,
@@ -64,6 +65,7 @@ const router = new Router({
         {
           // for now lets treat the he
           path: 'users',
+          name: 'Users',
           component: require('@/components/ViewAccounts'),
           meta: {
             requiresAuth: true,
@@ -73,6 +75,7 @@ const router = new Router({
         {
           // for now lets treat the he
           path: 'users/online',
+          name: 'OnlineUsers',
           component: require('@/components/AdminOnlineAccounts'),
           meta: {
             requiresAuth: true,
@@ -82,6 +85,7 @@ const router = new Router({
         {
           // for now lets treat the he
           path: 'users/:username',
+          name: 'AdminUser',
           component: require('@/components/AdminViewAccount'),
           meta: {
             requiresAuth: true,
@@ -91,6 +95,7 @@ const router = new Router({
         {
           // for now lets treat the he
           path: 'settings',
+          name: 'Settings',
           component: require('@/components/AdminSettings'),
           meta: {
             requiresAuth: true,
