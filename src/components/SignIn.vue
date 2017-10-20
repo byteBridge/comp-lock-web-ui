@@ -2,7 +2,9 @@
   <v-container fluid>
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
-
+        <v-alert color="error" icon="error" value="true" dismissible v-model="showAdminAlert">
+          The page you want to visit requires you to sign in as an administrator.
+        </v-alert>
         <v-card  class="login container">
           <v-card-title ><h3 class="teal--text headline"> Sign in</h3></v-card-title>
            <v-card-text>
@@ -52,7 +54,8 @@
         username: '',
         password: '',
         loader: null,
-        loading: false
+        loading: false,
+        showAdminAlert: false
       }
     },
 
@@ -61,8 +64,12 @@
       authUser () { return this.$store.getters.authUser }
     },
 
+    mounted () {
+      this.showAdminAlert = !!this.$route.query.requires_admin
+    },
     watch: {
       authUser (authUser) {
+        this.showLoader(false)
         if (authUser !== null && authUser !== undefined) {
           var returnPath = this.$route.query.return_to
           var { type, username } = authUser.user
