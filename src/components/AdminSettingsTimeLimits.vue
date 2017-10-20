@@ -10,10 +10,10 @@
 
         <v-card>
             <v-card-title>
-                <v-toolbar dense dark class="teal">
+                <v-toolbar dense dark class="primary">
                     <v-toolbar-title><v-icon dark>timer</v-icon> Time limits</v-toolbar-title>
                     <v-spacer></v-spacer>
-                      <v-btn dark class="green" @click="showUserTypeDialog({}, false)"><v-icon>add</v-icon>New account type</v-btn>
+                      <v-btn dark class="accent" @click="showUserTypeDialog({}, false)"><v-icon>add</v-icon>New account type</v-btn>
               </v-toolbar>
             </v-card-title>
 

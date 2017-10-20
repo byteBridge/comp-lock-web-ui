@@ -1,9 +1,9 @@
 <template>
   <!-- Showing loading progress -->
   <div v-if="!user.username">
-    <v-progress-circular indeterminate v-bind:size="50" color="teal"></v-progress-circular>
+    <v-progress-circular indeterminate v-bind:size="50" color="primary"></v-progress-circular>
     <h3 class="title"> Loading account info. Please wait</h3>
-    <v-progress-linear v-bind:indeterminate="true" color="teal"></v-progress-linear>
+    <v-progress-linear v-bind:indeterminate="true" color="primary"></v-progress-linear>
   </div>
 
   <!-- Only showing the actual content when loading's done -->
@@ -15,7 +15,7 @@
       @close="$router.push('/admin/users')">
     </AppConfirmDeleteUser>
 
-    <v-toolbar dark color="teal" extended>
+    <v-toolbar dark color="primary" extended>
     <v-btn flat :to="{ path: '/admin/users' }"><v-icon left>chevron_left</v-icon> Back</v-btn>
     <v-toolbar-title class="white--text" slot="extension">
         {{user.f_name}} {{ user.s_name}}
@@ -27,14 +27,14 @@
       </v-chip>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-     <v-btn class="elevation-1 teal--text"><v-icon left class="teal--text">print</v-icon>Print Report</v-btn></vr>
+     <v-btn class="elevation-1 primary--text"><v-icon left class="primary--text">print</v-icon>Print Report</v-btn></vr>
       
       <!-- Blocking and unblocking user -->
       <v-btn
         v-if = "user.blocked === false"
-        class="elevation-1  orange--text"
+        class="elevation-1  secondary--text"
         @click="blockUser">
-        <v-icon left class="orange--text">block</v-icon>
+        <v-icon left class="secondary--text">block</v-icon>
         Block</v-btn>
 
       <v-btn
@@ -56,16 +56,16 @@
 
   <v-card class="mt-2" style="height:300px;">
       <v-btn-toggle v-model.number="daysBack" style="float:right;">
-        <v-btn class="teal--text" flat :value="7">
+        <v-btn class="primary--text" flat :value="7">
           Past week
         </v-btn>
-        <v-btn class="teal--text"  flat :value="14">
+        <v-btn class="primary--text"  flat :value="14">
           Past 2 weeks
         </v-btn>
-        <v-btn class="teal--text"  flat :value="30">
+        <v-btn class="primary--text"  flat :value="30">
           Past month
         </v-btn>
-        <v-btn class="teal--text"  flat :value="90">
+        <v-btn class="primary--text"  flat :value="90">
           past 3 months
         </v-btn>
       </v-btn-toggle>

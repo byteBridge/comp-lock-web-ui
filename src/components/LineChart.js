@@ -33,7 +33,7 @@ function normaliseData (rawData, daysBack) {
     labels: labels.map(label => moment(label).format('MMM DD')),
     datasets: [{
       label: 'Login activities',
-      borderColor: 'teal',
+      borderColor: 'purple',
       backgroundColor: 'rgba(224, 242, 241, 0.6)',
       data
     }]

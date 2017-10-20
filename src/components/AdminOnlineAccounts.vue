@@ -2,7 +2,7 @@
   <div>
     <v-card class="mt-2">
      <v-card-title>
-      <v-toolbar dark dense class="teal">
+      <v-toolbar dark dense class="primary">
         <v-toolbar-title>Online Accounts</v-toolbar-title>
         <v-spacer></v-spacer>
           <v-text-field
@@ -26,7 +26,7 @@
         >
         <template slot="items" scope="props">
           <td class="text-xs-left">
-            <v-btn :to="{ path: `/admin/users/${props.item.username}` }" flat class="teal--text">
+            <v-btn :to="{ path: `/admin/users/${props.item.username}` }" flat class="primary--text">
               <v-icon left>open_in_new</v-icon>
               {{ props.item.s_name }} {{ props.item.f_name }}
             </v-btn>

@@ -8,7 +8,7 @@
           </v-alert>
         <v-card large>
           <v-card-title>
-            <div class="title teal--text">Delete User</div>
+            <div class="title primary--text">Delete User</div>
           </v-card-title>
           <v-card-text>
             <p>Are you sure you want to delete <strong>{{user.f_name}} {{user.s_name}}</strong></p>

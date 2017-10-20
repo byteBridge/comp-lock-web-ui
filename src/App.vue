@@ -7,9 +7,9 @@
 
     <v-toolbar light app clipped-left fixed v-if="$route.path !== '/' && $route !== '/signin'">
       <v-toolbar-title
-        class="teal--text">
+        class="primary--text">
         <v-btn flat :to="{ name: 'Home' }">
-          <v-icon left light class="teal--text">desktop_mac</v-icon>
+          <v-icon left light class="primary--text">desktop_mac</v-icon>
           CompManager
           </v-btn>
       </v-toolbar-title>
@@ -20,7 +20,7 @@
       <v-btn
         v-if="authenticated"
         dark
-        class="mr-3 ml-0 orange white--text"
+        class="mr-3 ml-0 secondary white--text"
         @click.native="signOut">
         <v-icon left dark>lock_outline</v-icon>
         Sign out

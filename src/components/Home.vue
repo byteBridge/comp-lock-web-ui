@@ -1,6 +1,6 @@
 <template>
   <v-card class="grey lighten-5" flat>
-    <v-toolbar dark class="teal elevation-1" extended>
+    <v-toolbar dark class="primary elevation-1" extended>
     </v-toolbar>
     <v-layout row>
       <v-flex xs10 offset-xs1>
@@ -8,14 +8,17 @@
           <v-toolbar card class="white" prominent>
             <v-toolbar-title class="body-2 grey--text">Computer Management System</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn dark class="teal white--text" @click.native="viewUserAccount">
+            <v-btn dark class="primary white--text" @click.native="viewUserAccount">
               <v-icon>perm_identity</v-icon>
               View My account
             </v-btn>
+            <v-btn class="secondary white--text">
+              <v-icon left dark>lock_outline</v-icon>
+              Sign out</v-btn>
           </v-toolbar>
           <v-divider></v-divider>
           <v-card-text style="height: 120px;">
-            <h3 class="title teal--text">Welcome</h3>
+            <h3 class="title primary--text">Welcome</h3>
             <p>
               Computer Management System allows you to sign in with your username and password to use the computers responsibly, to research and learn new things.
               We believe that you will make the best out of the limited time you are provisioned by your administrators and come out tops in your academic persues.
@@ -26,14 +29,14 @@
     </v-layout>
     <v-layout row wrap>
       <v-flex xs10 offset-xs1>
-        <v-toolbar dark dense class="mt-2 teal">
+        <v-toolbar dark dense class="mt-2 primary">
         <v-toolbar-title>Frequently Asked Questions</v-toolbar-title>
       </v-toolbar>
       </v-flex>
       <v-flex xs10 offset-xs1>
-        <v-card v-for="item in items" :key="item.title" class="mt-2" style="border-left-style: solid; border-left-color: teal; border-left-width: 2px;">
+        <v-card v-for="item in items" :key="item.title" class="mt-2 side-color">
           <v-card-title primary-title >
-            <div class="body-2 teal--text">{{item.title}}</div>
+            <div class="body-2 primary--text">{{item.title}}</div>
             <div v-html="item.subtitle"></div>
           </v-card-title>
         </v-card>
@@ -92,7 +95,12 @@
 </script>
 
 <style>
-  .card--flex-toolbar {
+ .side-color {
+   border-left-style: solid;
+   border-left-color: purple;
+   border-left-width: 2px;
+ }
+ .card--flex-toolbar {
     margin-top: -64px;
   }
 </style>

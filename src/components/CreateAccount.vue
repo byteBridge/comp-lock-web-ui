@@ -65,8 +65,8 @@
 
             <v-card class="mt-3">
                 <v-card-text>
-                    <v-btn @click="submit" class="teal white--text" block>submit</v-btn>
-                    <v-btn @click="clear" block class="orange white--text" dark>clear</v-btn>
+                    <v-btn @click="submit" class="primary white--text" block>submit</v-btn>
+                    <v-btn @click="clear" block class="secondary white--text" dark>clear</v-btn>
                 </v-card-text>
             </v-card>
         </v-flex>

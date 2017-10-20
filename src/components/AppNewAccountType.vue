@@ -5,8 +5,8 @@
         {{ alert.message }}
       </v-alert>
       <v-card-title>
-        <div v-if="isEdit" class="headline teal--text">Update time limits</div>
-        <div v-else class="headline teal--text">New account type</div>
+        <div v-if="isEdit" class="headline primary--text">Update time limits</div>
+        <div v-else class="headline primary--text">New account type</div>
       </v-card-title>
       <v-card-text>
         <v-layout row wrap>
@@ -41,9 +41,9 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn class="teal white--text darken-1" v-if="isEdit" @click.native="editTimeLimits">Update</v-btn>
-        <v-btn class="teal white--text darken-1" v-else @click.native="createUserType">Create</v-btn>
-        <v-btn class="teal--text darken-2" flat="flat" @click.native="exit">Close</v-btn>
+        <v-btn class="primary white--text darken-1" v-if="isEdit" @click.native="editTimeLimits">Update</v-btn>
+        <v-btn class="primary white--text darken-1" v-else @click.native="createUserType">Create</v-btn>
+        <v-btn class="primary--text darken-2" flat="flat" @click.native="exit">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

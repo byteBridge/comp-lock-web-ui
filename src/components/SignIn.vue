@@ -6,7 +6,7 @@
           The page you want to visit requires you to sign in as an administrator.
         </v-alert>
         <v-card  class="login container">
-          <v-card-title ><h3 class="teal--text headline"> Sign in</h3></v-card-title>
+          <v-card-title ><h3 class="primary--text headline"> Sign in</h3></v-card-title>
            <v-card-text>
             <v-container>
               <v-layout row wrap>
@@ -37,7 +37,7 @@
             @click.native="signin"
             :disabled="loading"
             style="margin: 5 0 5 0"
-            class="teal white--text"
+            class="primary white--text"
           >
             Sign In
           </v-btn>
