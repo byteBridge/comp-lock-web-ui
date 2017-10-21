@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="margin-top: 100px;">
+  <v-container fluid style="margin-top: 70px;">
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
         <v-alert color="error" icon="error" value="true" dismissible v-model="showAdminAlert">
