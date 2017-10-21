@@ -1,9 +1,10 @@
 <template>
-  <v-container fluid>
+  <v-container fluid style="margin-top: 100px;">
    <v-layout row wrap justify-center>
       <v-flex xs12 sm6>
         <v-alert color="error" icon="error" value="true" dismissible v-model="showAdminAlert">
           The page you want to visit requires you to sign in as an administrator.
+          <v-btn class="primary--text" @click.native="$router.push('/signin'); showAdminAlert =   false;">Sign in as student instead</v-btn>
         </v-alert>
         <v-card  class="login container">
           <v-card-title ><h3 class="primary--text headline"> Sign in</h3></v-card-title>
@@ -54,18 +55,17 @@
         username: '',
         password: '',
         loader: null,
-        loading: false,
-        showAdminAlert: false
+        loading: false
       }
     },
 
     computed: {
       alert () { return this.$store.getters.alert },
-      authUser () { return this.$store.getters.authUser }
+      authUser () { return this.$store.getters.authUser },
+      showAdminAlert () { return !!this.$route.query.requires_admin }
     },
 
     mounted () {
-      this.showAdminAlert = !!this.$route.query.requires_admin
     },
     watch: {
       authUser (authUser) {
