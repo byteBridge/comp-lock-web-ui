@@ -137,6 +137,7 @@ router.beforeEach((to, from, next) => {
         })
       }
 
+      // TODO: Make sure admin gets redirected to the admin version of the user account//
       // Allow non admin only to view their accounts
       if (to.params.username && to.params.username === user.user.username || user.user.type === 'administrator') {
         return next()
