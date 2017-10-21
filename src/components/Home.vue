@@ -12,7 +12,7 @@
               <v-icon>perm_identity</v-icon>
               View My account
             </v-btn>
-            <v-btn class="secondary white--text">
+            <v-btn  v-if="authenticated" class="secondary white--text" @click.native="signOut">
               <v-icon left dark>lock_outline</v-icon>
               Sign out</v-btn>
           </v-toolbar>
@@ -54,6 +54,18 @@
         } else {
           this.$router.push(`/users/${this.$store.getters.authUser.user.username}`)
         }
+      },
+      signOut () {
+        this.$store.commit('setAuthUser', null)
+        this.$router.push({ name: 'SignIn' })
+      }
+    },
+
+    computed: {
+      authenticated () {
+        const authUser = this.$store.getters.authUser || null
+        if (authUser && authUser.token) return true
+        return false
       }
     },
 
