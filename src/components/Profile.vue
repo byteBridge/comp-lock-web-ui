@@ -9,6 +9,11 @@
 
       <!-- render content only when the user has been found-->
       <v-card v-else class="grey lighten-5" flat>
+        <AppChangePassword
+          :showDialog="showChangePasswordDialog"
+          :user="user"
+          @close="showChangePasswordDialog = false">
+        </AppChangePassword>
         <v-toolbar dark class="primary elevation-1" extended>
           <v-spacer></v-spacer>
           <v-btn flat icon to="/"><v-icon dark>help</v-icon></v-btn>
@@ -19,7 +24,7 @@
               <v-toolbar card class="white" prominent>
                 <v-toolbar-title class="title primary--text"><v-icon class="primary--text">perm_identity</v-icon> {{ user.f_name }} {{ user.s_name}}</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn dark class="primary white--text">
+                <v-btn @click="showChangePasswordDialog = true;" dark class="primary white--text">
                   <v-icon>lock</v-icon>
                  Change My Password
                 </v-btn>
@@ -69,9 +74,10 @@
 <script>
 
 import LineChart from '@/components/LineChart.js'
+import AppChangePassword from '@/components/AppChangePassword'
 
 export default {
-  components: { LineChart },
+  components: { LineChart, AppChangePassword },
   computed: {
     authUser () { return this.$store.getters.authUser },
     authenticated () {
@@ -106,7 +112,8 @@ export default {
         { text: 'Blocked Status', value: 'blocked', align: 'left' },
         { text: 'Member since', align: 'left' }
       ],
-      user: {} // for the graph
+      user: {}, // for the graph
+      showChangePasswordDialog: false
     }
   },
 
