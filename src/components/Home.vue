@@ -17,7 +17,7 @@
               Sign out</v-btn>
           </v-toolbar>
           <v-divider></v-divider>
-          <v-card-text style="height: 120px;">
+          <v-card-text>
             <h3 class="title primary--text">Welcome</h3>
             <p>
               Computer Management System allows you to sign in with your username and password to use the computers responsibly, to research and learn new things.
