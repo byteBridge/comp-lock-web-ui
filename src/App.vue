@@ -3,43 +3,9 @@
 
     <app-alert :alert="alert" :showAlert="showAlert"></app-alert>
     <!-- the admin navigation drawer -->
-    <app-admin-navigation-drawer v-if="authUser && authUser.user.type==='administrator'"></app-admin-navigation-drawer>
+    <app-admin-navigation-drawer v-if="authenticated && authUser.user.type==='administrator'"></app-admin-navigation-drawer>
 
-    <v-toolbar light app clipped-left fixed v-if="$route.path !== '/' && $route !== '/signin'">
-      <v-toolbar-title
-        class="primary--text">
-        <v-btn flat :to="{ name: 'Home' }">
-          <v-icon left light class="primary--text">desktop_mac</v-icon>
-          CompManager
-          </v-btn>
-      </v-toolbar-title>
-
-      <v-spacer></v-spacer>
-
-      <!-- action buttons (not requiring one to navigate to another route)-->
-      <v-btn
-        v-if="authenticated"
-        dark
-        class="mr-3 ml-0 secondary white--text"
-        @click.native="signOut">
-        <v-icon left dark>lock_outline</v-icon>
-        Sign out
-      </v-btn>
-
-      <v-btn
-        class="mr-2"
-        v-else
-        flat
-        v-for="menu in toolbarMenuItems"
-        :key="menu.id"
-        :to="menu.url">
-        <v-icon left light>{{menu.icon}}</v-icon>
-        {{menu.title}}
-      </v-btn>
-
-    </v-toolbar>
-
-    <!-- The Main content -->
+   <!-- The Main content -->
     <main>
       <v-content>
         <v-container id="wrapping" fluid>
