@@ -53,6 +53,20 @@
                 </v-list-tile-content>
             </v-list-tile>
         </template>
+
+    </v-list>
+    <v-list style="margin-top:200px;">
+        <v-divider></v-divider>
+        <v-subheader>Actions</v-subheader>
+            <v-list-tile>
+              <v-btn dark block class="primary white--text" :to="{ path: `/users/${$store.getters.authUser.user.username}` }">
+              <v-icon class="white--text">perm_identity</v-icon>
+              View My account
+            </v-btn>
+            </v-list-tile>
+            <v-list-tile>
+            <v-btn block class="secondary" @click.native="signOut"><v-icon left class="white--text">lock</v-icon> sign out</v-btn>
+            </v-list-tile>
     </v-list>
 </v-navigation-drawer>
 </template>
@@ -99,8 +113,11 @@
 
     methods: {
       goTo (url) {
-        console.log(this.$route)
         this.$router.push({ path: url })
+      },
+      signOut () {
+        this.$store.commit('setAuthUser', null)
+        this.$router.push({ name: 'SignIn' })
       }
     }
   }
