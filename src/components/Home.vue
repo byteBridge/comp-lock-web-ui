@@ -106,7 +106,7 @@
   }
 </script>
 
-<style>
+<style scoped>
  .side-color {
    border-left-style: solid;
    border-left-color: purple;
