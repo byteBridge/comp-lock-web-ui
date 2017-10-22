@@ -1,5 +1,4 @@
 <template>
-  <v-container fluid>
       <!-- Showing loading progress -->
       <div v-if="!user.username">
         <v-progress-circular indeterminate v-bind:size="50" color="primary"></v-progress-circular>
@@ -68,7 +67,6 @@
           </v-flex>
         </v-layout>
       </v-card>
-  </v-container>
 </template>
 
 <script>
