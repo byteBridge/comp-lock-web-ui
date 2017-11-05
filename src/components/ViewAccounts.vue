@@ -18,7 +18,7 @@
     <AppConfirmDeleteUser
       :showDialog="showDeleteDialog"
       :user="userToDelete"
-      @close="userToDelete = {}; showDeleteDialog = false;">
+      @close="userToDelete = {}; showDeleteDialog = false; getUsers();">
     </AppConfirmDeleteUser>
     
     <v-card-text>
@@ -79,17 +79,16 @@
       }
     },
     mounted () {
-      let config = {
-        headers: { Authorization: this.$store.getters.authUser.token }
-      }
-
-      this.$http.get(`/users`, config)
-        .then(res => {
-          this.users = res.data.users
-        })
+      this.getUsers()
     },
 
     methods: {
+      getUsers () {
+        this.$http.get(`/users`)
+          .then(res => {
+            this.users = res.data.users
+          })
+      },
       blockUser (user) {
         this.$http
           .put(`/users/${user.username}/block`)
