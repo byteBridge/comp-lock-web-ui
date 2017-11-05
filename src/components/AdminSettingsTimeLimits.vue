@@ -8,22 +8,20 @@
           @close="getUserTypes">
         </AppNewAccountType>
 
+        <v-toolbar dense class="transparent mb-2" flat>
+          <v-toolbar-title>
+            <v-icon light>timer</v-icon> Time limits</v-toolbar-title>
+            <v-spacer></v-spacer>
+          <v-btn dark class="primary white--text" @click="showUserTypeDialog({}, false)"><v-icon>add</v-icon>New account type</v-btn>
+        </v-toolbar>
         <v-card>
-            <v-card-title>
-                <v-toolbar dense dark class="primary">
-                    <v-toolbar-title><v-icon dark>timer</v-icon> Time limits</v-toolbar-title>
-                    <v-spacer></v-spacer>
-                      <v-btn dark class="accent" @click="showUserTypeDialog({}, false)"><v-icon>add</v-icon>New account type</v-btn>
-              </v-toolbar>
-            </v-card-title>
-
             <v-card-text>
               <v-data-table
                 v-bind:headers="headers"
                 :items="userTypes"
                 :search="searchText"
                 hide-actions
-                class="elevation-1"
+                class="elevation-0"
                 >
                 <template slot="items" scope="props">
                     <td class="text-xs-left"> {{ props.item.user_type }}</td>
