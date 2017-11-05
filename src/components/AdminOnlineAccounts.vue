@@ -1,31 +1,27 @@
 <template>
   <div>
-    <v-card class="mt-2">
-     <v-card-title>
-      <v-toolbar dark dense class="primary">
-        <v-toolbar-title>Online Accounts</v-toolbar-title>
-        <v-spacer></v-spacer>
-          <v-card dark class="info darken-4 elevation-3">
-            <v-text-field
-            dark
-            class="white--text ml-1 mr-1"
-            style="border-radius:2px;"
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-            v-model="searchText"
-          ></v-text-field>
-          </v-card>
-        </v-toolbar>
-     </v-card-title>
+    
+  <v-toolbar dense class="transparent mb-2" flat>
+    <v-toolbar-title><h3 class="title gray--text">Online Accounts</h3></v-toolbar-title>
+    <v-spacer></v-spacer>
+        <v-text-field
+        light
+        style="border-radius:2px;"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+        v-model="searchText"
+      ></v-text-field>
+    </v-toolbar>
+    <v-card>
      <v-card-text>
        <v-data-table
           v-bind:headers="headers"
           :items="users"
           :search="searchText"
           hide-actions
-          class="elevation-1"
+          class="elevation-0"
         >
         <template slot="items" scope="props">
           <td class="text-xs-left">

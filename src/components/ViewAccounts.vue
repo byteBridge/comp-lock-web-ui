@@ -1,20 +1,10 @@
 <template>
-  <v-card>
-    <!-- When admin want to delete account -->
-    <AppConfirmDeleteUser
-      :showDialog="showDeleteDialog"
-      :user="userToDelete"
-      @close="userToDelete = {}; showDeleteDialog = false;">
-    </AppConfirmDeleteUser>
-    
-    <v-card-title>
-      <v-toolbar dark dense class="primary">
-    <v-toolbar-title>User Accounts</v-toolbar-title>
+  <div>
+    <v-toolbar dense class="transparent mb-2" flat>
+    <v-toolbar-title><h3 class="title gray--text">User Accounts</h3></v-toolbar-title>
     <v-spacer></v-spacer>
-     <v-card dark class="info darken-4 elevation-3">
         <v-text-field
-        dark
-        class="white--text ml-1 mr-1"
+        light
         style="border-radius:2px;"
         append-icon="search"
         label="Search"
@@ -22,17 +12,22 @@
         hide-details
         v-model="searchText"
       ></v-text-field>
-      </v-card>
-  </v-toolbar>
+    </v-toolbar>
+  <v-card>
+    <!-- When admin want to delete account -->
+    <AppConfirmDeleteUser
+      :showDialog="showDeleteDialog"
+      :user="userToDelete"
+      @close="userToDelete = {}; showDeleteDialog = false; getUsers();">
+    </AppConfirmDeleteUser>
     
-    </v-card-title>
     <v-card-text>
     <v-data-table
       v-bind:headers="headers"
       :items="users"
       :search="searchText"
       hide-actions
-      class="elevation-1"
+      class="elevation-0"
     >
     <template slot="items" scope="props">
       <td class="text-xs-left">
@@ -60,6 +55,8 @@
     </v-data-table>
     </v-card-text>
   </v-card>
+  </div>
+  
 </template>
 
 <script>
@@ -82,17 +79,16 @@
       }
     },
     mounted () {
-      let config = {
-        headers: { Authorization: this.$store.getters.authUser.token }
-      }
-
-      this.$http.get(`/users`, config)
-        .then(res => {
-          this.users = res.data.users
-        })
+      this.getUsers()
     },
 
     methods: {
+      getUsers () {
+        this.$http.get(`/users`)
+          .then(res => {
+            this.users = res.data.users
+          })
+      },
       blockUser (user) {
         this.$http
           .put(`/users/${user.username}/block`)
