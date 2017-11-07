@@ -5,6 +5,8 @@
     <v-toolbar-title><h3 class="title gray--text">Online Accounts</h3></v-toolbar-title>
     <v-spacer></v-spacer>
         <v-text-field
+        class="mr-0"
+        solo
         light
         style="border-radius:2px;"
         append-icon="search"
