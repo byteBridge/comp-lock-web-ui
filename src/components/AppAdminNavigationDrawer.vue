@@ -85,6 +85,7 @@
         Kudakwashe
       </v-btn>
       <v-btn flat large @click="signOut">
+        <v-icon left>exit_to_app</v-icon>
         Sign out
       </v-btn>
     </v-toolbar>
