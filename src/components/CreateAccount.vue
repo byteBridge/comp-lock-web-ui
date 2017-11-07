@@ -22,6 +22,7 @@
                   <v-text-field
                   label="Name"
                   v-model="name"
+                  ref="name"
                   :counter="10"
                   required
                   :rules="[rules.required]"
@@ -30,9 +31,11 @@
                   <v-text-field
                   label="Surname"
                   v-model="surname"
+                  ref="surname"
                   required
                   :rules="[rules.required]"
                   ></v-text-field>
+
                   <v-select
                   label="Gender"
                   v-model="selectGender"
@@ -41,7 +44,8 @@
                   required
                   :rules="[rules.required]"
                   ></v-select>
-                    <v-select
+
+                  <v-select
                   label="Account Type"
                   v-model="selectAccountType"
                   :items="accountType"
@@ -65,6 +69,7 @@
                   <v-text-field
                   label="Username"
                   v-model="username"
+                  ref="username"
                   prepend-icon="perm_identity"
                   :counter="10"
                   required
@@ -76,17 +81,20 @@
                   type="password"
                   prepend-icon="lock_outline"
                   v-model="password"
+                  ref="password"
                   loading
                   required
                   :rules="[rules.required, rules.password]"
                   >
                   <v-progress-linear slot="progress" :value="passwordProgress" height="2" :color="passwordColor"></v-progress-linear>
                   </v-text-field>
+
                   <v-text-field
                   label="Confirm your password"
                   type="password"
                   prepend-icon="lock_outline"
                   v-model="confirmPassword"
+                  ref="confirmPassword"
                   loading
                   required
                   :rules="[rules.required, rules.password, rules.matchingPassword]"
@@ -182,12 +190,13 @@
         })
       },
       clear () {
-        this.name = ''
-        this.surname = ''
-        this.username = ''
-        this.password = ''
-        this.confirmPassword = ''
         this.step = 1
+        // reset the form
+        const resetKeys = [ 'name', 'surname', 'username', 'password', 'confirmPassword' ]
+        resetKeys.forEach(key => {
+          this.$refs[key].reset()
+          this[key] = ''
+        })
       },
       validateAccountInfo () {
         const isValid = this.name !== '' && this.surname !== '' && this.selectGender !== null && this.selectAccountType !== null
