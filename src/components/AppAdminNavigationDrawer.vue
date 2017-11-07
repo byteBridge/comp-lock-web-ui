@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-navigation-drawer
-      persistent
+      permanent
       clipped
       app
       :mini-variant="drawer">
@@ -57,7 +57,7 @@
         </template>
 
     </v-list>
-   
+   <v-divider></v-divider>
 </v-navigation-drawer>
 
     <v-toolbar
