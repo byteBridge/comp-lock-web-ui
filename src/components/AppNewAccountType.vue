@@ -13,31 +13,27 @@
           <v-flex xs12>
             <v-text-field
               label="Enter account name"
-              hint="At least 3"
+              hint="At least 3 letters"
               v-model="userType"
               min="3"
               :readonly = "isEdit"
             ></v-text-field>
           </v-flex>
 
-          <v-flex xs4 sm4 class="mr-3">
-            <v-select
-              v-bind:items="hours"
-              v-model="selectedHours"
-              label="Hours"
-              autocomplete
-            ></v-select>
+          <v-flex xs12 sm12>
+            <v-slider :label="`Hours (${selectedHours})`" :value="40" :max="5" v-model.number="selectedHours"></v-slider>
           </v-flex>
 
-          <v-flex xs4 sm4>
-            <v-select
-              v-bind:items="minutes"
-              v-model="selectedMinutes"
-              label="Minutes"
-              autocomplete
-            ></v-select>
+          <v-flex xs12 sm12>
+            <v-slider :label="`Minutes (${selectedMinutes})`" :value="40" :max="59" v-model.number="selectedMinutes" ></v-slider>
           </v-flex>
         </v-layout>
+        <v-divider class="mb-1"></v-divider>
+        <v-chip>
+          <v-chip-avatar><v-icon class="primary--text">timer</v-icon></v-chip-avatar>
+          {{selectedHours}} hours, {{ selectedMinutes}} minutes
+          </v-chip>
+        <v-divider class="mt-1"></v-divider>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
