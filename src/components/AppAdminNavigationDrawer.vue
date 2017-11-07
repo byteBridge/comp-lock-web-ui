@@ -1,14 +1,11 @@
 <template>
+  <div>
     <v-navigation-drawer
-      permanent
-      light
-      left
-      enable-resize-watcher
-      absolute
-      class="elevation-1"
-      style="position:fixed;"
-      app clipped>
-      
+      persistent
+      clipped
+      app
+      :mini-variant="drawer">
+
     <v-list dense>
         <template v-for="(item, i) in items">
             <v-layout
@@ -43,9 +40,14 @@
             </v-list-group>
 
             <v-list-tile v-else @click="goTo(item.url)" v-model="item.model">
+                
                 <v-list-tile-action>
-                    <v-icon>{{ item.icon }}</v-icon>
+                <v-tooltip right>
+                    <v-icon slot="activator">{{ item.icon }}</v-icon>
+                    <span>{{ item.text }}</span>
+                </v-tooltip>
                 </v-list-tile-action>
+
                 <v-list-tile-content>
                     <v-list-tile-title>
                     {{ item.text }}
@@ -55,20 +57,39 @@
         </template>
 
     </v-list>
-    <v-list style="margin-top:200px;">
-        <v-divider></v-divider>
-        <v-subheader>Actions</v-subheader>
-            <v-list-tile>
-              <v-btn dark block class="primary white--text" :to="{ path: `/users/${$store.getters.authUser.user.username}` }">
-              <v-icon class="white--text">perm_identity</v-icon>
-              View My account
-            </v-btn>
-            </v-list-tile>
-            <v-list-tile>
-            <v-btn block class="secondary" @click.native="signOut"><v-icon left class="white--text">lock</v-icon> sign out</v-btn>
-            </v-list-tile>
-    </v-list>
+   
 </v-navigation-drawer>
+
+    <v-toolbar
+      color="primary darken-3"
+      dark
+      app
+      class="elevation-1"
+      clipped-left
+      fixed
+    >
+      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        Computer Manager
+      </v-toolbar-title>
+      <!-- Only show the text field when the search api is available -->
+      <v-text-field
+        v-if="false"
+        solo
+        prepend-icon="search"
+        placeholder="Search"
+      ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn flat large :to="{ path: `/users/${$store.getters.authUser.user.username}` }">
+        <v-icon left>perm_identity</v-icon>
+        Kudakwashe
+      </v-btn>
+      <v-btn flat large @click="signOut">
+        Sign out
+      </v-btn>
+    </v-toolbar>
+
+</div>
 </template>
 
 <script>
