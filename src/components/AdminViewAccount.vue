@@ -15,14 +15,12 @@
       @close="$router.push('/admin/users')">
     </AppConfirmDeleteUser>
 
-    <v-toolbar dark color="primary" extended>
+    <v-toolbar flat >
     <v-btn flat :to="{ path: '/admin/users' }"><v-icon left>chevron_left</v-icon> Back</v-btn>
-    <v-toolbar-title class="white--text" slot="extension">
+    <v-toolbar-title class="primary--text" >
         {{user.f_name}} {{ user.s_name}}
-      <v-chip small label outline color="green" text-color="white">
-        <v-avatar>
-           <v-icon class="white--text">perm_identity</v-icon>
-        </v-avatar>
+      <v-chip small color="primary" text-color="white">
+           <v-icon class="primary--text">perm_identity</v-icon>
         {{user.type}}
       </v-chip>
     </v-toolbar-title>
@@ -54,51 +52,65 @@
       {{user.f_name}} {{user.s_name}}'s account has been never used to access the computers.
   </v-alert>
 
-  <v-card class="mt-2" style="height:300px;">
-      <v-btn-toggle v-model.number="daysBack" style="float:right;">
-        <v-btn class="primary--text" flat :value="7">
-          Past week
-        </v-btn>
-        <v-btn class="primary--text"  flat :value="14">
-          Past 2 weeks
-        </v-btn>
-        <v-btn class="primary--text"  flat :value="30">
-          Past month
-        </v-btn>
-        <v-btn class="primary--text"  flat :value="90">
-          past 3 months
-        </v-btn>
-      </v-btn-toggle>
-    <line-chart :height="110" :data="user.history" :daysBack="daysBack" :userType="user.type"></line-chart>
-  </v-card>
-   <v-card class="mt-2">
-     <v-card-title>
-       History
-       <v-spacer></v-spacer>
-      <v-text-field
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-        v-model="searchText"
-      ></v-text-field>
-     </v-card-title>
-     <v-card-text>
-       <v-data-table
-          v-bind:headers="headers"
-          :items="user.history"
-          :search="searchText"
-          class="elevation-1"
-        >
-        <template slot="items" scope="props" @click="alert('hello world')">
-          <td class="text-xs-left">{{ props.item.computer_name }}</td>
-          <td class="text-xs-left">{{ props.item.log_date }}</td>
-          <td class="text-xs-right">{{ props.item.start_time }}</td>
-          <td class="text-xs-right">{{ props.item.duration }}</td>
-        </template>
-       </v-data-table>
-     </v-card-text>
-   </v-card>
+  <v-layout row wrap>
+        <v-flex xs12 sm12>
+      <v-card class="mt-2" style="height:300px;">
+        <v-card-title>
+          <h3 class="title">Login Activities</h3>
+          <v-spacer></v-spacer>
+          <v-btn-toggle v-model.number="daysBack" style="float:right;">
+            <v-btn class="primary--text" flat :value="7">
+              Past week
+            </v-btn>
+            <v-btn class="primary--text"  flat :value="14">
+              Past 2 weeks
+            </v-btn>
+            <v-btn class="primary--text"  flat :value="30">
+              Past month
+            </v-btn>
+            <v-btn class="primary--text"  flat :value="90">
+              past 3 months
+            </v-btn>
+          </v-btn-toggle></v-card-title>
+          <v-card-text>
+        <line-chart :height="75" :data="user.history" :daysBack="Number(daysBack)" :userType="user.type"></line-chart>
+          </v-card-text>
+      </v-card>
+    </v-flex>
+
+    <v-flex xs12 sm12>
+      <v-card class="mt-3">
+        <v-card-title>
+          <h3 class="title">History</h3>
+          <v-spacer></v-spacer>
+          <v-text-field
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+            v-model="searchText"
+          ></v-text-field>
+        </v-card-title>
+        <v-card-text>
+          <v-data-table
+              v-bind:headers="headers"
+              :items="user.history"
+              :search="searchText"
+              class="elevation-0"
+            >
+            <template slot="items" scope="props" @click="alert('hello world')">
+              <td class="text-xs-left">{{ props.item.computer_name }}</td>
+              <td class="text-xs-left">{{ props.item.log_date }}</td>
+              <td class="text-xs-right">{{ props.item.start_time }}</td>
+              <td class="text-xs-right">{{ props.item.duration }}</td>
+            </template>
+          </v-data-table>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+  </v-layout>
+
+   
   </div>
 </template>
 
