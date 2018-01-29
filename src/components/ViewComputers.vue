@@ -14,6 +14,7 @@
       <v-text-field v-model="filter" style="width: 97%; margin: auto" solo placeholder="Search" prepend-icon="search"></v-text-field>
     </v-flex>
      <v-flex xs12 sm12>
+      <v-btn class="ma-3 white elevation-1"  @click="filter=''"><v-icon color="grey">fiber_manual_record</v-icon> All Computers</v-btn>
       <v-btn class="ma-3 white elevation-1"  @click="filter='available'"><v-icon :color="statusColors['available']">fiber_manual_record</v-icon> Available</v-btn>
       <v-btn class="ma-3 white elevation-1"  @click="filter='in_use'"><v-icon :color="statusColors['in_use']" >fiber_manual_record</v-icon> Computer in use </v-btn>
       <v-btn class="ma-3 white elevation-1" @click="filter='deactivated'"><v-icon :color="statusColors['deactivated']"  >fiber_manual_record</v-icon> Computer deactivated </v-btn>
@@ -26,7 +27,7 @@
             <v-icon :color="statusColors[computer.status]">fiber_manual_record</v-icon>
             {{ computer.status.split('_').join(' ') }}
           </v-card-title>
-          <v-card-media height="100px" style="background: rgba(123, 31, 162, 0.1)">
+          <v-card-media height="100px" class="computer-card">
             <div class="container">
               <v-icon class="">timer</v-icon>  Added {{ computer.created_at | niceDate }} <br>
               <div v-if="computer.username">
@@ -80,18 +81,11 @@
 </template>
 
 <script>
-import icons from './AppIcons.vue'
 import common from '@/mixins/common'
-import os from 'os'
 export default {
   name: 'ViewComputers',
   mixins: [common],
-  components: { icons },
   mounted () {
-    Object.keys(os).forEach(key => {
-      console.log(key)
-      console.log(typeof os[key] === 'function' && os[key]())
-    })
     this.$http.get('/computers')
       .then(response => {
         this.computersData = response.data.computers
@@ -125,5 +119,7 @@ export default {
 </script>
 
 <style>
-
+  .computer-card {
+    background: rgba(123, 31, 162, 0.1);
+  }
 </style>
