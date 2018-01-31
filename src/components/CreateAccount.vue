@@ -105,9 +105,9 @@
 
           </v-card-text>
       </v-card>
-      <v-btn @click="submit" large class="primary white--text"><v-icon left>person_add</v-icon>Create account</v-btn>
+      <v-btn @click.native="submit" large class="primary white--text"><v-icon left>person_add</v-icon>Create account</v-btn>
       <v-btn @click.native="step = 1" class="primary white--text"><v-icon left>keyboard_arrow_up</v-icon>Update Account Info</v-btn>
-      <v-btn @click="clear" class="secondary white--text" dark><v-icon left>clear</v-icon>clear</v-btn>
+      <v-btn @click.native="clear" class="secondary white--text" dark><v-icon left>clear</v-icon>clear</v-btn>
     </v-stepper-content>
     
   </v-stepper>
@@ -166,7 +166,7 @@
       submit () {
         if (!this.validateLoginInfo()) return
 
-        this.$http.post('/auth/register', {
+        this.$http.post('/users/new', {
           f_name: this.name,
           s_name: this.surname,
           username: this.username,
