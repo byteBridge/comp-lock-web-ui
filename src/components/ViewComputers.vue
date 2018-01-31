@@ -5,6 +5,9 @@
         <h3 class="title"><v-icon>laptop_windows</v-icon> Computers ({{ computers.length }})</h3>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn primary class="white--text" @click="getAllComputers">
+        <v-icon>refresh</v-icon> Refresh
+      </v-btn>
       <v-btn primary class="white--text" @click="addNewComputer = true">
         <v-icon>add</v-icon> Add a new computer
       </v-btn>
@@ -27,7 +30,7 @@
             <v-icon :color="statusColors[computer.status]">fiber_manual_record</v-icon>
             {{ computer.status.split('_').join(' ') }}
           </v-card-title>
-          <v-card-media height="100px" class="computer-card">
+          <v-card-media height="80px" class="computer-card">
             <div class="container">
               <v-icon class="">timer</v-icon>  Added {{ computer.created_at | niceDate }} <br>
               <div v-if="computer.username">
@@ -35,18 +38,21 @@
               </div>
             </div>
           </v-card-media>
-          <v-card-actions>
+          <v-card-actions class="grey darken-2">
+            <v-spacer></v-spacer>
             <div class="text-center">
                <v-tooltip top>  
-                <v-btn slot="activator" icon> <v-icon>bug_report</v-icon></v-btn>
-                <span>Report problem</span>
                 </v-tooltip>
-                <v-tooltip top>  
-                <v-btn slot="activator" icon> <v-icon>block</v-icon></v-btn>
+                <v-tooltip top  v-if="computer.status !== 'deactivated'">  
+                <v-btn slot="activator" @click="deactivateComputer(computer.name)" icon> <v-icon color="orange">block</v-icon></v-btn>
                 <span>Deactivate computer</span>
                 </v-tooltip>
+                <v-tooltip top  v-else>  
+                <v-btn slot="activator" @click="reactivateComputer(computer.name)" icon> <v-icon color="green">done_all</v-icon></v-btn>
+                <span>Reactivate computer</span>
+                </v-tooltip>
                 <v-tooltip top>  
-                <v-btn slot="activator" icon> <v-icon>delete</v-icon></v-btn>
+                <v-btn slot="activator" icon> <v-icon color="red">delete</v-icon></v-btn>
                 <span>Remove Computer</span>
                 </v-tooltip>
             </div>
@@ -57,22 +63,36 @@
 
   <!-- Dialog to dhow hoow to add a new computer to the system -->
 
-   <v-dialog v-model="addNewComputer" persistent max-width="500px">
+   <v-dialog v-model="addNewComputer" persistent max-width="900px">
         <v-card large>
-          <v-card-title>
-            <div class="title primary--text">How to</div>
-          </v-card-title>
           <v-card-text>
+          <v-toolbar  class="mb-3" flat>
+            <v-toolbar-title>
+              <div class="title primary--text">How to register </div></v-toolbar-title>
+          <v-spacer></v-spacer>
+           <v-btn class="green white--text darken-1" flat @click.native="addNewComputer = false">close</v-btn>
+
+            </v-toolbar>
+            <h3 class="title">Method 1 (recommended way)</h3>
             <p>Make sure the computer you want to add is connected to the same network as the server</p>
             <p>Open <b>Computer Manager</b> and login. Find the register computer menu and follow instructions</p>
             <p>
-              <img src="../assets/logo.png" alt="">
+              <img src="../assets/RegisterComputer.png" alt="">
             </p>
+
+            <h3 class="title">Method 2</h3>
+            <div class="container">
+              <v-alert :color="alert.type" icon="error" value="true" dismissible v-model="alert.value">
+                {{ alert.message }}
+              </v-alert>
+              <p>Type in the computer name in the text field below ( keep in mind this method is <code>Case Sensitive</code>).</p>
+              <p> The computer name can be found by clicking on the start menu</p>
+              <v-text-field label="Computer Name" placeholder="Enter computer name" v-model="computerName"></v-text-field>
+              <v-btn class="primary white--text darken-1" block :loading="registering" :disabled="registering" @click.native="registerComputer">Register Computer</v-btn>
+
+            </div>
+
             </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="green white--text darken-1" flat @click.native="addNewComputer = false">close</v-btn>
-          </v-card-actions>
         </v-card>
       </v-dialog>
 
@@ -86,11 +106,7 @@ export default {
   name: 'ViewComputers',
   mixins: [common],
   mounted () {
-    this.$http.get('/computers')
-      .then(response => {
-        this.computersData = response.data.computers
-      })
-      .catch(() => {})
+    this.getAllComputers()
   },
   data () {
     return {
@@ -101,7 +117,14 @@ export default {
         deactivated: 'red'
       },
       computersData: [],
-      addNewComputer: false
+      addNewComputer: false,
+      computerName: '',
+      registering: false,
+      alert: {
+        type: '',
+        message: '',
+        value: false
+      }
     }
   },
   computed: {
@@ -112,6 +135,52 @@ export default {
           computer.name.toLowerCase().trim().indexOf(this.filter.toLowerCase().trim()) > -1 ||
           computer.status.toLowerCase().trim().indexOf(this.filter.toLowerCase().trim()) > -1
         )
+      })
+    }
+  },
+
+  methods: {
+    getAllComputers () {
+      this.$http.get('/computers')
+      .then(response => {
+        this.computersData = response.data.computers
+      })
+      .catch(() => {})
+    },
+
+    deactivateComputer (computerName) {
+      this.$http.put('/computers/deactivate', {
+        name: computerName
+      }).then(response => {
+        this.computersData.find(c => c.name === computerName).status = 'deactivated'
+      })
+    },
+
+    reactivateComputer (computerName) {
+      this.$http.put('/computers/reactivate', {
+        name: computerName
+      }).then(response => {
+        this.computersData.find(c => c.name === computerName).status = 'available'
+      })
+    },
+
+    registerComputer () {
+      this.registering = true
+      this.$http.post('/computers/new', {
+        name: this.computerName
+      }).then(response => {
+        this.computerName = ''
+        this.alert.message = response.data.message
+        this.alert.value = true
+        this.alert.type = 'success'
+
+        this.registering = false
+      }).catch(error => {
+        this.alert.message = 'Could not register the computer. Consider using Method 1'
+        this.alert.value = true
+        this.alert.type = 'error'
+        console.log(error)
+        this.registering = false
       })
     }
   }
