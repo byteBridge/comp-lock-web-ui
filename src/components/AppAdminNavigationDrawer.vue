@@ -119,6 +119,12 @@
             model: this.$route.name === 'NewAccount'
           },
           {
+            icon: 'laptop_windows',
+            text: 'View Computers',
+            url: '/admin/computers',
+            model: this.$route.name === 'Computers'
+          },
+          {
             icon: 'people',
             text: 'View Accounts',
             url: '/admin/users',

@@ -94,6 +94,16 @@ const router = new Router({
         },
         {
           // for now lets treat the he
+          path: 'computers',
+          name: 'Computers',
+          component: require('@/components/ViewComputers'),
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
           path: 'settings',
           name: 'Settings',
           component: require('@/components/AdminSettings'),
