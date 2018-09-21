@@ -1,6 +1,6 @@
 # comp-lock-web-ui
 
-> Platform to manage complock users and view help.
+> A multi platform to manage connected computers in schools.
 
 ## Screenshots
 
