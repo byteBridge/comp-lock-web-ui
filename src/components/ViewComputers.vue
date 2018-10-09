@@ -30,11 +30,14 @@
             <v-icon :color="statusColors[computer.status]">fiber_manual_record</v-icon>
             {{ computer.status.split('_').join(' ') }}
           </v-card-title>
-          <v-card-media height="80px" class="computer-card">
+          <v-card-media class="computer-card">
             <div class="container">
               <v-icon class="">timer</v-icon>  Added {{ computer.created_at | niceDate }} <br>
               <div v-if="computer.username">
                 <v-icon>perm_identity</v-icon><router-link :to="`/admin/users/${computer.username}`">{{ computer.username }}</router-link> is online
+              </div>
+              <div v-if="computer.last_used_by">
+                <v-icon>person</v-icon> Last used by <router-link :to="`/admin/users/${computer.last_used_by}`">{{ computer.last_used_by }}</router-link> {{ computer.last_used_time | niceDate }}
               </div>
             </div>
           </v-card-media>
