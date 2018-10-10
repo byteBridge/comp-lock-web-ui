@@ -24,7 +24,7 @@ const mutations = {
   },
 
   closeAlert (state) {
-    state.alert = state.alert = {
+    state.alert = {
       title: '',
       type: '',
       show: false
