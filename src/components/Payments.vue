@@ -244,7 +244,7 @@ export default {
     totalPrice () {
       return this.checkedComputers.length * 10
     },
-    
+
     authUser () {
       return this.$store.getters.authUser || {}
     }
