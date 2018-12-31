@@ -322,7 +322,7 @@ export default {
   .flex { display: flex }
   .flex-col { flex-direction: column }
   .justify-between { justify-content: space-between }
-  .justify-end { justify-content: end }
+  .justify-end { justify-content: flex-end }
   .items-center { align-items: center }
   .items-baseline { align-items: baseline }
   .flex-1 { flex: 1 }
