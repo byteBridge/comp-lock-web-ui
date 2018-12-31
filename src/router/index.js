@@ -104,6 +104,16 @@ const router = new Router({
         },
         {
           // for now lets treat the he
+          path: 'payments',
+          name: 'Payments',
+          component: require('@/components/Payments'),
+          meta: {
+            requiresAuth: true,
+            requiresAdminAuth: true
+          }
+        },
+        {
+          // for now lets treat the he
           path: 'settings',
           name: 'Settings',
           component: require('@/components/AdminSettings'),
