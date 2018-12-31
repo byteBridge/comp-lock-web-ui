@@ -25,7 +25,7 @@
                 </v-flex>
             </v-layout>
 
-            <v-list-group v-else-if="item.children">
+            <v-list-group v-else-if="item.children" >
                 <v-list-tile slot="item" @click="">
                     <v-list-tile-action>
                         <v-icon>{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
@@ -39,7 +39,7 @@
                 </v-list-tile>
             </v-list-group>
 
-            <v-list-tile v-else @click="goTo(item.url)" v-model="item.model">
+            <v-list-tile v-else @click="goTo(item.url)" v-model="item.model" >
                 
                 <v-list-tile-action>
                 <v-tooltip right>
@@ -128,7 +128,14 @@
             icon: 'people',
             text: 'View Accounts',
             url: '/admin/users',
-            model: this.$route.name === 'Users' || this.routeName === 'AdminUser' },
+            model: this.$route.name === 'Users' || this.routeName === 'AdminUser'
+          },
+          {
+            icon: 'credit_card',
+            text: 'Payments',
+            url: '/admin/payments',
+            model: this.$route.name === 'Payments'
+          },
           {
             icon: 'settings',
             text: 'Settings',
