@@ -179,7 +179,7 @@ export default {
       this.$http.get('/billing/last-transaction')
         .then(response => {
           this.lastTransaction = response.data
-          if (response.data.status === 'awaiting-payment') {
+          if (response.data && response.data.status === 'awaiting-payment') {
             this.subscriptionPingInterval = this.pingSubscriptionStatus(response.data.reference)
           }
         })
