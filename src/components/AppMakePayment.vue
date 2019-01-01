@@ -106,9 +106,9 @@
             }
             console.log(response)
           })
-          .catch(() => {
+          .catch((err) => {
             this.alert = {
-              message: 'Failed to make the transaction. No money has been transfered and you can try again.',
+              message: err.response.data.error.error.error || 'Failed to make the transaction. No money has been transfered and you can try again.',
               value: true,
               type: 'error'
             }
