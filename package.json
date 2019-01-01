@@ -1,6 +1,6 @@
 {
   "name": "comp-lock-web-ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Platform to manage the users and view help.",
   "author": "Kudakwashe Paradzayi <kgparadzayi@gmail.com>",
   "private": true,
@@ -58,7 +58,7 @@
     "shelljs": "^0.7.6",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "url-loader": "^0.5.8",
+    "url-loader": "^1.1.2",
     "vue-loader": "^11.3.4",
     "vue-style-loader": "^2.0.5",
     "vue-template-compiler": "^2.3.4",
